@@ -1,17 +1,32 @@
 # SARotate
-For rotating Google service accounts.
+For rotating Google service accounts to bypass bans or any other myriad of reasons.
 
 ## What is it?
-This script was created with the help (more like written) of 88lex. It uses portion of his amazing sasync script.
+This script was created with the help (more like written) of 88lex. It uses portion of his amazing sasync (https://github.com/88lex/sasync) script. This was written mainly for CloudBox users but can be utilized by anyone.
 
-## How to install?
-You can install through git: `git clone git://https://github.com/Visorask/SARotate.git`.
+## Installation
+1. `cd /opt` 
 
-## If you utilized a script for creating your .json files and you need to rename them to utilize this script.
-Here is a command to batch rename files in a folder to match the script syntax.
+2. `sudo git clone git://https://github.com/Visorask/SARotate.git`
 
-1. `cd your/json/folder` 
+3. `sudo chown -R user:group SARotate - Run `id` to find your user / group.
 
-2. `ls -v | cat -n | while read n f; do mv -n "$f" "$n.json"; done`
+4. `cd SARotate && chmod +x SARotate.sh`
 
-## 
+5. `nano SARotate.sh` Edit the variables to match your settings. Save and close.
+
+6. `cd /opt/SARotate/system`
+
+7. `nano SARotate.service`
+
+8. Edit the user / group from `changethis` to your user / group. -Run `id` to find your user / group. 
+
+9. Exit and save the file. 
+
+10. `sudo cp /opt/SARotate/system/SARotate.service /etc/systemd/system/`
+
+11. `sudo systemctl daemon-reload`
+
+12. `sudo systemctl enable SARotate.service`
+
+13. `sudo systemctl start SARotate.service`
