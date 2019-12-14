@@ -1,0 +1,15 @@
+[Unit]
+Description=SARotate     
+After=network-online.target
+
+[Service]
+User=changethis
+Group=changethis
+Type=simple
+WorkingDirectory=/opt/SARotate
+ExecStart=/bin/bash /opt/SARotate/rotate.sh
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target
