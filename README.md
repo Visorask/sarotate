@@ -9,7 +9,7 @@ This script was created with the help (more like written) of 88lex. It uses port
 
 2. `sudo git clone git://github.com/Visorask/SARotate.git`
 
-3. `sudo chown -R user:group SARotate - Run `id` to find your user / group.
+3. `sudo chown -R user:group SARotate` - Run `id` to find your user / group.
 
 4. `cd SARotate && chmod +x sarotate.sh`
 
