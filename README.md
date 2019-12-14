@@ -11,9 +11,9 @@ This script was created with the help (more like written) of 88lex. It uses port
 
 3. `sudo chown -R user:group SARotate - Run `id` to find your user / group.
 
-4. `cd SARotate && chmod +x SARotate.sh`
+4. `cd SARotate && chmod +x sarotate.sh`
 
-5. `nano SARotate.sh` Edit the variables to match your settings. Save and close.
+5. `nano sarotate.sh` Edit the variables to match your settings. Save and close.
 
 6. `cd /opt/SARotate/system`
 
