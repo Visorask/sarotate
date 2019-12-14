@@ -7,7 +7,7 @@ User=changethis
 Group=changethis
 Type=simple
 WorkingDirectory=/opt/SARotate
-ExecStart=/bin/bash /opt/SARotate/rotate.sh
+ExecStart=/bin/bash /opt/SARotate/sarotate.sh
 Restart=always
 RestartSec=10
 
