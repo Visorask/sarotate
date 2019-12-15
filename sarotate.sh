@@ -21,7 +21,7 @@ while :
 do
 	echo SA Rotate is running.
 		COUNT=$(( $COUNT>=$MAXJS?MINJS:$COUNT+1 ))
-		export RCLONE_CONFIG_$REMOTE_SERVICE_ACCOUNT_FILE=$JSONDIR/$COUNT.json
+		export RCLONE_CONFIG_UPDATE_$REMOTE_SERVICE_ACCOUNT_FILE=$JSONDIR/$COUNT.json
 	echo SA changed to $JSONDIR/$COUNT.JSON
 	echo SA rotate is now going to sleep for $SLEEPTIME
 		sleep $SLEEPTIME
