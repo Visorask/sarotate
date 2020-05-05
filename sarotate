@@ -15,7 +15,7 @@ NEXTJS=1                       # Use 1 or 101.  101 will split API usage to sepa
 JSONDIR=/opt/sa                # Location of the directory with your service account files.
 SLEEPTIME=15m                  # Time the script will sleep for until running again.
 
-NOTIF=true                     # Set to true to receive apprise notifications. false to omit notifications.
+NOTIF=false                     # Set to true to receive apprise notifications. False to omit notifications.
 NOTIF_COMM="apprise"           # Adjust if you want a specific apprise command.
 LOG_DIR=/opt/logs              # Directory for logs.
 DEL_LOG_RESTART=true           # Clear sarotate log when system restarted.
