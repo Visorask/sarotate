@@ -1,5 +1,5 @@
 [Unit]
-Description=SARotate     
+Description=sarotate     
 After=network-online.target
 
 [Service]
@@ -7,7 +7,7 @@ User=changethis
 Group=changethis
 Type=simple
 WorkingDirectory=/opt/sarotate
-ExecStart=/bin/bash /opt/sarotate/sarotate
+ExecStart=/bin/bash /opt/sarotate/sarotate sarotate.set
 Restart=always
 RestartSec=10
 
