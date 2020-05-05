@@ -9,7 +9,7 @@ This script was created with the help (more like written) of 88lex. It uses port
 ## Installation
 1. `cd /opt` 
 
-2. `sudo git clone github.com/Visorask/SARotate.git`
+2. `sudo git clone github.com/Visorask/sarotate.git`
 
 3. `sudo chown -R user:group SARotate` - Run `id` to find your user / group.
 
