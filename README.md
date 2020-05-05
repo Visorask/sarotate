@@ -8,16 +8,28 @@ This script was created with the help (more like written) of 88lex. It uses port
 
 ## Installation
 1. `cd /opt` 
+
 2. `git clone github.com/Visorask/sarotate.git`
+
 3. `sudo chown -R user:group sarotate` - Run `id` to find your user / group.
-4. `cd /opt/sarotate && chmod +x sarotate.sh`
+
+4. `cd /opt/sarotate && chmod +x sarotate`
+
 5. `nano sarotate` Edit the variables to match your settings. Save and close.
-6. `cd /opt/SARotate/system`
-7. `nano SARotate.service`
-8. Edit the user / group from `changethis` to your user / group. -Run `id` to find your user / group. 
-9. Exit and save the file. 
-10. `sudo cp /opt/SARotate/system/SARotate.service /etc/systemd/system/`
-11. `sudo systemctl daemon-reload`
-12. `sudo systemctl enable SARotate.service`
-13. `sudo systemctl start SARotate.service`
-14. If you would like to check that it is running working correctly run: `sudo service sarotate status`
+
+5. If you would like to use crontab then follow the below steps:
+  5a. `crontab -e`
+  5b. Add `@reboot /opt/sarotate/sarotate`
+  5c. Only thing is this might start before the mount so be aware.
+  
+6. `cd /opt/sarotate/system`
+  6a. `nano sarotate.service`
+  6b. Edit the user / group from `changethis` to your user / group. -Run `id` to find your user / group. 
+  6c. Exit and save the file. 
+  6d. `sudo cp /opt/sarotate/system/sarotate.service /etc/systemd/system/`
+  6e. `sudo systemctl daemon-reload`
+  6f. `sudo systemctl enable sarotate.service`
+  6g. `sudo systemctl start sarotate.service`
+  6h. If you would like to check that it is running working correctly run: `sudo service sarotate status`
+
+
