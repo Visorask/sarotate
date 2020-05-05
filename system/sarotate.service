@@ -6,8 +6,8 @@ After=network-online.target
 User=changethis
 Group=changethis
 Type=simple
-WorkingDirectory=/opt/SARotate
-ExecStart=/bin/bash /opt/SARotate/sarotate.sh
+WorkingDirectory=/opt/sarotate
+ExecStart=/bin/bash /opt/sarotate/sarotate
 Restart=always
 RestartSec=10
 
