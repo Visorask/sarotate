@@ -16,6 +16,9 @@ This script was created with the help of 88lex. It uses portion of his amazing s
 4. `cd /opt/sarotate && chmod +x sarotate`
 
 5. `nano sarotate` Edit the variables to match your settings. Save and close.
+
+   When 
+
 ---
 6. If you would like to use crontab then follow the below steps:
   - `crontab -e`
