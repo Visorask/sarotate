@@ -8,29 +8,16 @@ This script was created with the help (more like written) of 88lex. It uses port
 
 ## Installation
 1. `cd /opt` 
-
-2. `sudo git clone github.com/Visorask/sarotate.git`
-
-3. `sudo chown -R user:group SARotate` - Run `id` to find your user / group.
-
-4. `cd SARotate && chmod +x sarotate.sh`
-
-5. `nano sarotate.sh` Edit the variables to match your settings. Save and close.
-
+2. `git clone github.com/Visorask/sarotate.git`
+3. `sudo chown -R user:group sarotate` - Run `id` to find your user / group.
+4. `cd /opt/sarotate && chmod +x sarotate.sh`
+5. `nano sarotate` Edit the variables to match your settings. Save and close.
 6. `cd /opt/SARotate/system`
-
 7. `nano SARotate.service`
-
 8. Edit the user / group from `changethis` to your user / group. -Run `id` to find your user / group. 
-
 9. Exit and save the file. 
-
 10. `sudo cp /opt/SARotate/system/SARotate.service /etc/systemd/system/`
-
 11. `sudo systemctl daemon-reload`
-
 12. `sudo systemctl enable SARotate.service`
-
 13. `sudo systemctl start SARotate.service`
-
 14. If you would like to check that it is running working correctly run: `sudo service sarotate status`
