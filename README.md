@@ -18,28 +18,18 @@ This script was created with the help (more like written) of 88lex. It uses port
 5. `nano sarotate` Edit the variables to match your settings. Save and close.
 
 5. If you would like to use crontab then follow the below steps:
-  5a. `crontab -e`
+  - `crontab -e`
+  - Add `@reboot /opt/sarotate/sarotate`
+  - Only thing is this might start before the mount so be aware.
   
-  5b. Add `@reboot /opt/sarotate/sarotate`
-  
-  5c. Only thing is this might start before the mount so be aware.
-  
-6. `cd /opt/sarotate/system`
-
-  6a. `nano sarotate.service`
-  
-  6b. Edit the user / group from `changethis` to your user / group. -Run `id` to find your user / group. 
-  
-  6c. Exit and save the file. 
-  
-  6d. `sudo cp /opt/sarotate/system/sarotate.service /etc/systemd/system/`
-  
-  6e. `sudo systemctl daemon-reload`
-  
-  6f. `sudo systemctl enable sarotate.service`
-  
-  6g. `sudo systemctl start sarotate.service`
-  
-  6h. If you would like to check that it is running working correctly run: `sudo service sarotate status`
+6. Use this one for `systemd`.`cd /opt/sarotate/system`
+  - `nano sarotate.service`
+  - Edit the user / group from `changethis` to your user / group. -Run `id` to find your user / group. 
+  - Exit and save the file. 
+  - `sudo cp /opt/sarotate/system/sarotate.service /etc/systemd/system/`
+  - `sudo systemctl daemon-reload`
+  - `sudo systemctl enable sarotate.service`
+  - `sudo systemctl start sarotate.service`
+  - If you would like to check that it is running working correctly run: `sudo service sarotate status`
 
 
