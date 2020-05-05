@@ -16,14 +16,14 @@ This script was created with the help (more like written) of 88lex. It uses port
 4. `cd /opt/sarotate && chmod +x sarotate`
 
 5. `nano sarotate` Edit the variables to match your settings. Save and close.
-
+---
 6. If you would like to use crontab then follow the below steps:
   - `crontab -e`
   
   - Add `@reboot /opt/sarotate/sarotate`
   
   - Only thing is this might start before the mount so be aware.
-  
+ ---
 7. Use this one for `systemd`.`cd /opt/sarotate/system`
   - `nano sarotate.service`
   
@@ -40,5 +40,5 @@ This script was created with the help (more like written) of 88lex. It uses port
   - `sudo systemctl start sarotate.service`
   
   - If you would like to check that it is running working correctly run: `sudo service sarotate status`
-
+---
 
