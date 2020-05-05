@@ -26,6 +26,7 @@ This script was created with the help of 88lex. It uses portion of his amazing s
    - `sudo systemctl restart /etc/systemd/system/<nameofmount>.service` (Fill in <nameofmount> with your information.)
    - `./sarotate set.sarotate`
 
+   - You will also need the rclone beta.
 ---
 6. If you would like to use crontab then follow the below steps:
   - `crontab -e`
