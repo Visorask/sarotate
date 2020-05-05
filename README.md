@@ -30,27 +30,19 @@ This script was created with the help of 88lex. It uses portion of his amazing s
 6. If you would like to use crontab then follow the below steps:
   - `crontab -e`
   
-  - Add `@reboot /opt/sarotate/sarotate`
+  - Add `@reboot sleep 1m && /opt/sarotate/sarotate`
   
   - Only thing is this might start before the mount so be aware.
  ---
 7. Use this one for `systemd`. 
   - `cd /opt/sarotate/system`
-  
-  - `nano sarotate.service`
-  
-  - Edit the user / group from `changethis` to your user / group. -Run `id` to find your user / group. 
-  
-  - Exit and save the file. 
-  
-  - `sudo cp /opt/sarotate/system/sarotate.service /etc/systemd/system/`
-  
-  - `sudo systemctl daemon-reload`
-  
-  - `sudo systemctl enable sarotate.service`
-  
-  - `sudo systemctl start sarotate.service`
-  
+  - `nano sarotate.service`  
+  - Edit the user / group from `changethis` to your user / group. -Run `id` to find your user / group.   
+  - Exit and save the file.   
+  - `sudo cp /opt/sarotate/system/sarotate.service /etc/systemd/system/`  
+  - `sudo systemctl daemon-reload`  
+  - `sudo systemctl enable sarotate.service`  
+  - `sudo systemctl start sarotate.service`  
   - If you would like to check that it is running working correctly run: `sudo service sarotate status`
 ---
 
