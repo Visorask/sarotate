@@ -24,7 +24,9 @@ This script was created with the help (more like written) of 88lex. It uses port
   
   - Only thing is this might start before the mount so be aware.
  ---
-7. Use this one for `systemd`.`cd /opt/sarotate/system`
+7. Use this one for `systemd`. 
+  - `cd /opt/sarotate/system`
+  
   - `nano sarotate.service`
   
   - Edit the user / group from `changethis` to your user / group. -Run `id` to find your user / group. 
