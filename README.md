@@ -33,4 +33,4 @@ This script was created with the help (more like written) of 88lex. It uses port
 
 13. `sudo systemctl start SARotate.service`
 
-14. If you would like to check that it is running working correctly run: `sudo service SARotate status`
+14. If you would like to check that it is running working correctly run: `sudo service sarotate status`
