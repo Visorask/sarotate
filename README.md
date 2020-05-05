@@ -29,10 +29,7 @@ This script was created with the help of 88lex. It uses portion of his amazing s
 ---
 6. If you would like to use crontab then follow the below steps:
   - `crontab -e`
-  
   - Add `@reboot sleep 1m && /opt/sarotate/sarotate`
-  
-  - Only thing is this might start before the mount so be aware.
  ---
 7. Use this one for `systemd`. 
   - `cd /opt/sarotate/system`
