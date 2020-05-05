@@ -30,7 +30,7 @@ init ()
 rotate ()
 { eval echo "SA Rotate is initializing at `date`."$notif && sleep 1s
   while : ;do
-    while IFS=' ' read remote port junk;do 
+    while IFS=' ' read -r remote port junk;do 
       rc_cmd="rclone rc --rc-user="$RCUSER" --rc-pass="$RCPASSWORD" --rc-addr $IP:$port backend/command command=set fs=${remote%:*}: -o service_account_file=$JSONDIR/$COUNT.json"
       eval echo -e "$rc_cmd"$notif | tee >(eval)
         $rc_cmd > /dev/null
