@@ -4,7 +4,7 @@ For rotating Google service accounts to bypass bans or any other myriad of reaso
 "I am not a coder. I have no idea what I am doing. Use at your own risk!"
 
 ## What is it?
-This script was created with the help (more like written) of 88lex. It uses portion of his amazing sasync (https://github.com/88lex/sasync) script. This was written mainly for CloudBox users but can be utilized by anyone.
+This script was created with the help of 88lex. It uses portion of his amazing sasync (https://github.com/88lex/sasync) script. This was written mainly for CloudBox users but can be utilized by anyone.
 
 ## Installation
 1. `cd /opt` 
