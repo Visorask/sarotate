@@ -27,7 +27,7 @@ This script was created with the help of 88lex. It uses portion of his amazing s
    - `sudo systemctl daemon-reload`
    - `sudo systemctl restart /etc/systemd/system/<nameofmount>.service` (Fill in <nameofmount> with your information.)
    - `./sarotate sarotate.set`
-   - You will also need the rclone beta.
+   - You will also need the rclone beta. ```curl https://rclone.org/install.sh | sudo bash -s beta```
 ---
    
 ## If you would like to use crontab then follow the below steps:
