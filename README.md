@@ -18,7 +18,9 @@ This script was created with the help of 88lex. It uses portion of his amazing s
 5. `nano sarotate` Edit the variables to match your settings. Save and close.
 
 6. `nano sarotate.set` Add in w/e values you need.
+---
 
+### Extra Information 
    For the script to work you must edit your mounts to have either `--rc-no-auth` or `--rc-user=<username>` and `--rc-pass=<password>`. You can add those into a live mount by doing:
   
    - `sudo nano /etc/systemd/system/<nameofmount>.service` (Fill in <nameofmount> with your information.)
@@ -27,19 +29,21 @@ This script was created with the help of 88lex. It uses portion of his amazing s
    - `./sarotate sarotate.set`
    - You will also need the rclone beta.
 ---
-6. If you would like to use crontab then follow the below steps:
-  - `crontab -e`
-  - Add `@reboot sleep 1m && /opt/sarotate/sarotate`
+   
+## If you would like to use crontab then follow the below steps:
+  1. `crontab -e`
+  2. Add `@reboot sleep 1m && /opt/sarotate/sarotate`
  ---
-7. Use this one for `systemd`. 
-  - `cd /opt/sarotate/system`
-  - `nano sarotate.service`  
-  - Edit the user / group from `changethis` to your user / group. -Run `id` to find your user / group.   
-  - Exit and save the file.   
-  - `sudo cp /opt/sarotate/system/sarotate.service /etc/systemd/system/`  
-  - `sudo systemctl daemon-reload`  
-  - `sudo systemctl enable sarotate.service`  
-  - `sudo systemctl start sarotate.service`  
-  - If you would like to check that it is running working correctly run: `sudo service sarotate status`
+ 
+## If you would like to use systemd then follow the below steps: 
+  1. `cd /opt/sarotate/system`
+  2. `nano sarotate.service`  
+  3. Edit the user / group from `changethis` to your user / group. -Run `id` to find your user / group.   
+  4. Exit and save the file.   
+  5. `sudo cp /opt/sarotate/system/sarotate.service /etc/systemd/system/`  
+  6. `sudo systemctl daemon-reload`  
+  7. `sudo systemctl enable sarotate.service`  
+  8. `sudo systemctl start sarotate.service`  
+  9. If you would like to check that it is running working correctly run: `sudo service sarotate status`
 ---
 
