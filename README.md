@@ -17,7 +17,7 @@ This script was created with the help of 88lex. It uses portion of his amazing s
 
 5. `nano sarotate` Edit the variables to match your settings. Save and close.
 
-6. `nano set.sarotate` Add in w/e values you need.
+6. `nano sarotate.set` Add in w/e values you need.
 
    For the script to work you must edit your mounts to have either `--rc-no-auth` or `--rc-user=<username>` and `--rc-pass=<password>`. You can add those into a live mount by doing:
   
