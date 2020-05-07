@@ -9,7 +9,7 @@ This script was created with the help of 88lex. It uses portion of his amazing s
 ## Installation
 1. `cd /opt`
 
-2. `git clone github.com/Visorask/sarotate.git`
+2. `git clone https://github.com/Visorask/sarotate.git`
 
 3. `sudo chown -R user:group sarotate` - Run `id` to find your user / group.
 
