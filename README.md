@@ -7,7 +7,7 @@ For rotating Google service accounts to bypass bans or any other myriad of reaso
 This script was created with the help of 88lex. It uses portion of his amazing sasync (https://github.com/88lex/sasync) script. This was written mainly for CloudBox users but can be utilized by anyone.
 
 ## Installation
-1. `cd /opt` 
+1. `cd /opt`
 
 2. `git clone github.com/Visorask/sarotate.git`
 
@@ -18,6 +18,8 @@ This script was created with the help of 88lex. It uses portion of his amazing s
 5. `nano sarotate` Edit the variables to match your settings. Save and close.
 
 6. `nano sarotate.set` Add in w/e values you need.
+
+7. You will also need the rclone beta. ```curl https://rclone.org/install.sh | sudo bash -s beta```
 ---
 
 ### Extra Information 
@@ -27,7 +29,9 @@ This script was created with the help of 88lex. It uses portion of his amazing s
    - `sudo systemctl daemon-reload`
    - `sudo systemctl restart /etc/systemd/system/<nameofmount>.service` (Fill in <nameofmount> with your information.)
    - `./sarotate sarotate.set`
-   - You will also need the rclone beta. ```curl https://rclone.org/install.sh | sudo bash -s beta```
+   
+  You can also use this amazing script which has `--rc-no-auth` built into it, as well as, creating as many mounts as you want. https://github.com/maximuskowalski/smount
+  
 ---
    
 ## If you would like to use crontab then follow the below steps:
