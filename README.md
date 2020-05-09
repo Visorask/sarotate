@@ -30,7 +30,7 @@ This script was created with the help of 88lex. It uses portion of his amazing s
    - `sudo systemctl restart /etc/systemd/system/<nameofmount>.service` (Fill in <nameofmount> with your information.)
    - `./sarotate sarotate.set`
    
-  You can also use this amazing script which has `--rc-no-auth` built into it, as well as, creating as many mounts as you want. https://github.com/maximuskowalski/smount
+  You can also use this amazing script which has `--rc-no-auth` built into it, as well as, creating as many mounts as you want. https://github.com/maximuskowalski/smount/tree/sarotate-rclonebeta
   
 ---
    
