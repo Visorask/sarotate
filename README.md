@@ -20,6 +20,25 @@ This script was created with the help of 88lex. It uses portion of his amazing s
 6. `nano sarotate.set` Add in w/e values you need.
 
 7. You will also need the rclone beta. ```curl https://rclone.org/install.sh | sudo bash -s beta```
+
+8. Once you have done all this then you will need to restart the mounts you want to rotate before running this script. A command might look like this: ```sudo systemctl restart example.service```
+
+  Otherwise you might get an error like this:
+```
+Failed to rc: Failed to read rc response: 404 Not Found: {
+        "error": "couldn't find method \"backend/command\"",
+        "input": {
+                "command": "set",
+                "fs": "<remotename>:",
+                "opt": {
+                        "service_account_file": "<file/path/1.json>"
+                }
+        },
+        "path": "backend/command",
+        "status": 404
+}
+```
+
 ---
 
 ### Extra Information 
