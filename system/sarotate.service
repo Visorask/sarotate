@@ -7,6 +7,7 @@ User=changethis
 Group=changethis
 Type=simple
 WorkingDirectory=/opt/sarotate
+ExecStartPre=/bin/sleep 30
 ExecStart=/bin/bash /opt/sarotate/sarotate sarotate.set
 Restart=always
 RestartSec=10
