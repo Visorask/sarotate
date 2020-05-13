@@ -7,9 +7,9 @@ For rotating Google service accounts to bypass bans or any other myriad of reaso
 This script was created with the help of 88lex. It uses portion of his amazing sasync (https://github.com/88lex/sasync) script. This was written mainly for CloudBox users but can be utilized by anyone.
 
 ## Installation
-1. `cd /opt` 
+1. `cd /opt`
 
-2. `git clone github.com/Visorask/sarotate.git`
+2. `git clone https://github.com/Visorask/sarotate.git`
 
 3. `sudo chown -R user:group sarotate` - Run `id` to find your user / group.
 
@@ -18,6 +18,27 @@ This script was created with the help of 88lex. It uses portion of his amazing s
 5. `nano sarotate` Edit the variables to match your settings. Save and close.
 
 6. `nano sarotate.set` Add in w/e values you need.
+
+7. You will also need the rclone beta. ```curl https://rclone.org/install.sh | sudo bash -s beta```
+
+8. Once you have done all this then you will need to restart the mounts you want to rotate before running this script. A command might look like this: ```sudo systemctl restart example.service```
+
+  Otherwise you might get an error like this:
+```
+Failed to rc: Failed to read rc response: 404 Not Found: {
+        "error": "couldn't find method \"backend/command\"",
+        "input": {
+                "command": "set",
+                "fs": "<remotename>:",
+                "opt": {
+                        "service_account_file": "<file/path/1.json>"
+                }
+        },
+        "path": "backend/command",
+        "status": 404
+}
+```
+
 ---
 
 ### Extra Information 
@@ -27,7 +48,9 @@ This script was created with the help of 88lex. It uses portion of his amazing s
    - `sudo systemctl daemon-reload`
    - `sudo systemctl restart /etc/systemd/system/<nameofmount>.service` (Fill in <nameofmount> with your information.)
    - `./sarotate sarotate.set`
-   - You will also need the rclone beta. ```curl https://rclone.org/install.sh | sudo bash -s beta```
+   
+  You can also use this amazing script which has `--rc-no-auth` built into it, as well as, creating as many mounts as you want. https://github.com/maximuskowalski/smount/tree/sarotate-rclonebeta
+  
 ---
    
 ## If you would like to use crontab then follow the below steps:
