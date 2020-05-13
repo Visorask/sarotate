@@ -1,3 +1,5 @@
-remote1     1111
-remote2     2222
-remote3     3333
+#remotename       port
+
+remote1           1111
+remote2           2222
+remote3           3333
