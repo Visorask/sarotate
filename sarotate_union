@@ -1,0 +1,8 @@
+#You may have uncommented lines if you so choose like this one and the one below.
+#This is for people utilizing a union mount.
+
+#remotename       port
+
+remote1           1111
+remote2           1111
+remote3           1111
