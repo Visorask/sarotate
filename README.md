@@ -70,3 +70,8 @@ Failed to rc: Failed to read rc response: 404 Not Found: {
   9. If you would like to check that it is running working correctly run: `sudo service sarotate status`
 ---
 
+## Troubleshooting
+Will add more as people run into any issues.
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbNzU0ODQyOTMxXX0=
+-->
