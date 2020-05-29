@@ -37,7 +37,7 @@ rotate ()
       case $remote in ''|\#*) continue ;;esac
         eval echo -e "Switching remote $remote to use service account $COUNT.json for $SLEEPTIME" | eval tee $notif
         rclone rc --rc-user="$RCUSER" --rc-pass="$RCPASSWORD" --rc-addr $IP:$port backend/command command=set fs=${remote%:*}: -o \
-        service_account_file=$JSONDIR/$COUNT.json --log-level=ERROR |& eval tee $notif_key | tee -a "$LOG_FILE"
+        service_account_file=$JSONDIR/$COUNT.json --config="$RCONFIG" --log-level=ERROR |& eval tee $notif_key | tee -a "$LOG_FILE"
         COUNT=$(( (($COUNT - $MINJS + $NEXTJS) % $MOD) + $MINJS ))
     done < "$1" 
    sleep $SLEEPTIME
