@@ -13,7 +13,7 @@ IP=127.0.0.1                                 # Default is localhost/127.0.0.1 bu
 
 # General variables
 MINJS=1                                      # Minimum json file that you want to use.
-MAXJS=16                                     # Maximum json file that youw ant to use.
+MAXJS=16                                     # Maximum json file that you want to use.
 NEXTJS=1                                     # Use 1 or 101.  101 will split api usage to separate projects, but needs many SAs.
 JSONDIR=/opt/sa                              # Location of the directory with your service account files.
 SLEEPTIME=15m                                # Time the script will sleep for until running again.
