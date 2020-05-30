@@ -4,19 +4,19 @@ For rotating Google service accounts to bypass bans or any other myriad of reaso
 "I am not a coder. I have no idea what I am doing. Use at your own risk!"
 
 ## Changelog v2.0
-   - Added: Script now uses a .yml config file.
-   - Added: The config file is passed through the CLI with the script by `-c`.
-   - Added: If no config file is passed then it will default to `config.yml`
-   - Added: Different rclone config files can be defined in the .yml file.
-   - Added: Script has a little bit of error handling now and will exit if a config file is not passed through to the script.
-   - Added: Set files are no longer needed and the .yml holds all of the remotes/ports needed.
-   - Added: Improved logging.
-   - Added: Improved looping logic.
-   - Added: Comments in the .yml file will be stripped before being run through the script.
-   - Added: Check to see if log file exists, and create it if not.
-   - Old: Apprise notifications. 
-   - Old: Logging.
-   - Old: Initial looping logic. 
+   - [Added] Script now uses a .yml config file.
+   - [Added] The config file is passed through the CLI with the script by `-c`.
+   - [Added] If no config file is passed then it will default to `config.yml`
+   - [Added] Different rclone config files can be defined in the .yml file.
+   - [Added] Script has a little bit of error handling now and will exit if a config file is not passed through to the script.
+   - [Added] Set files are no longer needed and the .yml holds all of the remotes/ports needed.
+   - [Added] Improved logging.
+   - [Added] Improved looping logic.
+   - [Added] Comments in the .yml file will be stripped before being run through the script.
+   - [Added] Check to see if log file exists, and create it if not.
+   - [Current/Old] Apprise notifications. 
+   - [Current/Old] Logging.
+   - [Current/Old] Initial looping logic. 
 
 
 ## What is it?
