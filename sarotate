@@ -1,43 +1,74 @@
 #!/usr/bin/env bash
 # Written by Visorak and 88lex ; Use latest rclone beta for best result
 # Usage: ./sarotate sarotate.set
-# sarotate.set file has two columns, remote and port, and allows multiple remotes
-# remote1     1111
-# remote2     2222
 
-RCUSER="user"                      # Match rclone rc mount user and pass. If you use --no-auth then leave as default. 
-RCPASSWORD="pass"                  # rclone rc password. If you use --no-auth then leave as default.
-IP=127.0.0.1                       # Default is localhost/127.0.0.1 but you can change this to match your IP for RC.
+usage()
+{
+    echo "usage: ./sarotate options: -c"
+    echo "Example: ./sarotate -c conf.yml"
+}
 
-MINJS=1                            # Minimum json file that you want to use.
-MAXJS=16                           # Maximum json file that youw ant to use.
-NEXTJS=1                           # Use 1 or 101.  101 will split api usage to separate projects, but needs many SAs.
-JSONDIR=/opt/sa                    # Location of the directory with your service account files.
-SLEEPTIME=15m                      # Time the script will sleep for until running again.
-LOG_FILE=/opt/logs/sarotate.log    # Directory for logs.
-NOTIF="none"                        # Set NOTIF="key" , "all" or "none". Key includes errors.
-NOTIF_CMD="apprise"                # Simple apprise command. Edit to taste.
+optChoose() {
+while getopts ':c:' choice
+do
+    case "${choice}" in
+      c) cf=$OPTARG ;;
+     \?) echo "Invalid option: -${OPTARG}" 1>&2; usage; exit 1 ;;
+      :) echo "Invalid option: -${OPTARG} requires an argument." 1>&2; usage; exit 1 ;;
+      *) usage; exit 1 ;;
+  esac
+done
+shift $((OPTIND -1))
+}
 
-init ()
-{ COUNT=$MINJS
-  MOD=$(( $MAXJS - $MINJS + 1 ))
-  unset $notif_key;unset $notif
-  if [[ $NOTIF = "key" ]];then notif_key=' tee >($NOTIF_CMD)';fi
-  if [[ $NOTIF = "all" ]];then notif=' tee >($NOTIF_CMD)' && notif_key=$notif;fi
-  if [[ -f $LOG_FILE ]];then tail -n 50 "$LOG_FILE" > tmp;mv tmp "$LOG_FILE";fi; }
+optConfCheck() {
+if [ -z "$cf" ]; then 
+echo ""
+echo "ERROR: SARotate requires a configuration file." 
+echo ""
+usage
+exit 1
+fi
+}
 
-rotate ()
-{ ( echo -e "SA Rotate is initializing these mounts at `date` starting with $JSONDIR/$COUNT.json with increment of $NEXTJS"
-    cat $1 ; sleep 1s ) | eval tee $notif_key
-  while : ;do
-    while read remote port junk;do
-      eval echo -e "Switching remote $remote to use service account $COUNT.json for $SLEEPTIME" | eval tee $notif
-      rclone rc --rc-user="$RCUSER" --rc-pass="$RCPASSWORD" --rc-addr $IP:$port backend/command command=set fs=${remote%:*}: -o \
-      service_account_file=$JSONDIR/$COUNT.json --log-level=ERROR |& eval tee $notif_key | tee -a "$LOG_FILE"
-      COUNT=$(( (($COUNT - $MINJS + $NEXTJS) % $MOD) + $MINJS ))
-    done < "$1" 
-    sleep $SLEEPTIME
-  done; }
+optConfExist() {
+if [ ! -d "$(yyq r "$cf" log.log_dir)" ];then mkdir -p "$(yyq r "$cf" log.log_dir)"; fi
+if [ ! -f "$(yyq r "$cf" log.log_file)" ];then touch "$(yyq r "$cf" log.log_file)"; fi
+}
 
-init
-rotate "$1"
+mainInit () {
+COUNT="$(yyq r "$cf" global.minjs)"
+MOD=$(( "$(yyq r "$cf" global.maxjs)" - "$(yyq r "$cf" global.minjs)" + 1 ))
+    unset $notif_key; unset "$(yyq r "$cf" log.notif)"
+    if [[ "$(yyq r "$cf" log.notif)" = "key" ]];then notif_key=" tee >($(yyq r "$cf" log.notif))";fi
+    if [[ "$(yyq r "$cf" log.notif)" = "all" ]];then notif=" tee >($(yyq r "$cf" log.notif))" && notif_key="$(yyq r "$cf" log.notif)";fi
+    if [ -d "$(yyq r "$cf" log.log_dir)" ];then mkdir -p "$(yyq r "$cf" log.log_dir)"; fi
+    if [ -f "$(yyq r "$cf" log.log_file)" ];then touch "$(yyq r "$cf" log.log_file)"; fi
+    if [[ -f "$(yyq r "$cf" log.log_file)" ]];then tail -n 50 "$(yyq r "$cf" log.log_file)" > tmp;mv tmp "$(yyq r "$cf" log.log_file)";fi;
+}
+
+arrayCombine() {
+readarray -t arrayRemote < <(yyq r "$cf" main.remote | sed -E 's/- +\ ?//g')
+readarray -t arrayPort < <(yyq r "$cf" main.port | sed -E 's/- +\ ?//g')
+}
+
+mainRotate () {
+echo -e "[$(date "+%d.%m.%Y %T") INFO]: SA Rotate is now initializing these mounts, starting with $(yyq r "$cf" global.json_dir)/$COUNT.json with an increment of $(yyq r "$cf" global.nextjs)" |& eval tee $notif_key | tee -a "$(yyq r "$cf" log.log_file)"
+jin=0
+while [ $jin -lt ${#arrayRemote[*]} ]; do
+ echo -e "[$(date "+%d.%m.%Y %T") INFO]: Switching remote ${arrayRemote[$jin]%:*} to use service account $COUNT.json for $(yyq r "$cf" global.sleeptime)" |& eval tee "$notif_key" | tee -a "$(yyq r "$cf" log.log_file)"
+    rclone rc --rc-user="$(yyq r "$cf" global.rc_user)" --rc-pass="$(yyq r "$cf" global.rc_pass)" --rc-addr "$(yyq r "$cf" rclone.ip)":"${arrayPort[$jin]}" backend/command command=set fs="${arrayRemote[$jin]%:*}": -o \
+    service_account_file="$(yyq r "$cf" global.json_dir)"/"$COUNT".json --config="$(yyq r "$cf" rclone.rclone_config)" --log-level=ERROR |& eval tee "$notif_key" | tee -a "$(yyq r "$cf" log.log_file)"
+   COUNT=$(( ((COUNT - "$(yyq r "$cf" global.minjs)" + "$(yyq r "$cf" global.nextjs)") % MOD) + "$(yyq r "$cf" global.minjs)" ))
+  jin=$(( jin + 1 ));
+done
+echo -e "[$(date "+%d.%m.%Y %T") INFO]: SARotate will now go idle for $(yyq r "$cf" global.sleeptime)." | tee -a "$(yyq r "$cf" log.log_file)"
+sleep "$(yyq r "$cf" global.sleeptime)"
+}
+
+optChoose "$@"
+optConfCheck
+optConfExist
+mainInit
+arrayCombine
+mainRotate
