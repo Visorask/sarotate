@@ -31,19 +31,14 @@ exit 1
 fi
 }
 
-optConfExist() {
-if [ ! -d "$(yyq r "$cf" log.log_dir)" ];then mkdir -p "$(yyq r "$cf" log.log_dir)"; fi
-if [ ! -f "$(yyq r "$cf" log.log_file)" ];then touch "$(yyq r "$cf" log.log_file)"; fi
-}
-
 mainInit () {
 COUNT="$(yyq r "$cf" global.minjs)"
 MOD=$(( "$(yyq r "$cf" global.maxjs)" - "$(yyq r "$cf" global.minjs)" + 1 ))
     unset $notif_key; unset "$(yyq r "$cf" log.notif)"
     if [[ "$(yyq r "$cf" log.notif)" = "key" ]];then notif_key=" tee >($(yyq r "$cf" log.notif))";fi
     if [[ "$(yyq r "$cf" log.notif)" = "all" ]];then notif=" tee >($(yyq r "$cf" log.notif))" && notif_key="$(yyq r "$cf" log.notif)";fi
-    if [ -d "$(yyq r "$cf" log.log_dir)" ];then mkdir -p "$(yyq r "$cf" log.log_dir)"; fi
-    if [ -f "$(yyq r "$cf" log.log_file)" ];then touch "$(yyq r "$cf" log.log_file)"; fi
+    if [ ! -d "$(yyq r "$cf" log.log_dir)" ];then mkdir -p "$(yyq r "$cf" log.log_dir)"; fi
+    if [ ! -f "$(yyq r "$cf" log.log_file)" ];then touch "$(yyq r "$cf" log.log_file)"; fi
     if [[ -f "$(yyq r "$cf" log.log_file)" ]];then tail -n 50 "$(yyq r "$cf" log.log_file)" > tmp;mv tmp "$(yyq r "$cf" log.log_file)";fi;
 }
 
