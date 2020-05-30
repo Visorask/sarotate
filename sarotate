@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Written by Visorak and 88lex ; Use latest rclone beta for best result
-# Usage: ./sarotate sarotate.set
+# Usage: ./sarotate -c config.yml
 
 usage()
 {
