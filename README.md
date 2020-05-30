@@ -14,9 +14,9 @@ For rotating Google service accounts to bypass bans or any other myriad of reaso
    - [Added]: Improved looping logic.
    - [Added]: Comments in the .yml file will be stripped before being run through the script.
    - [Added]: Check to see if log file exists, and create it if not.
-   - [Implemented]: Apprise notifications. 
-   - [Implemented]: Logging.
-   - [Implemented]: Initial looping logic. 
+   - [Old]: Apprise notifications. 
+   - [Old]: Logging.
+   - [Old]: Initial looping logic. 
 
 
 ## What is it?
