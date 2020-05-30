@@ -39,8 +39,8 @@ MOD=$(( "$(yyq r "$st" "$cf" global.maxjs)" - "$(yyq r "$st" "$cf" global.minjs)
     unset $notif_key; unset "$(yyq r "$st" "$cf" log.notif)"
     if [[ "$(yyq r "$st" "$cf" log.notif)" = "key" ]];then notif_key=" tee >($(yyq r "$st" "$cf" log.notif))";fi
     if [[ "$(yyq r "$st" "$cf" log.notif)" = "all" ]];then notif=" tee >($(yyq r "$st" "$cf" log.notif))" && notif_key="$(yyq r "$st" "$cf" log.notif)";fi
-    if [ -d "$(yyq r "$st" "$cf" log.log_dir)" ];then mkdir -p "$(yyq r "$st" "$cf" log.log_dir)"; fi
-    if [ -f "$(yyq r "$st" "$cf" log.log_file)" ];then touch "$(yyq r "$st" "$cf" log.log_file)"; fi
+    if [ ! -d "$(yyq r "$st" "$cf" log.log_dir)" ];then mkdir -p "$(yyq r "$st" "$cf" log.log_dir)"; fi
+    if [ ! -f "$(yyq r "$st" "$cf" log.log_file)" ];then touch "$(yyq r "$st" "$cf" log.log_file)"; fi
     if [[ -f "$(yyq r "$st" "$cf" log.log_file)" ]];then tail -n 50 "$(yyq r "$st" "$cf" log.log_file)" > tmp;mv tmp "$(yyq r "$st" "$cf" log.log_file)";fi;
 }
 
