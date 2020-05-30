@@ -3,6 +3,9 @@ For rotating Google service accounts to bypass bans or any other myriad of reaso
 
 "I am not a coder. I have no idea what I am doing. Use at your own risk!"
 
+## Changelog
+
+
 ## What is it?
 This script was created with the help of 88lex. It uses portion of his amazing sasync (https://github.com/88lex/sasync) script. This was written mainly for CloudBox users but can be utilized by anyone.
 
@@ -19,7 +22,7 @@ This script was created with the help of 88lex. It uses portion of his amazing s
 
 6. `nano sarotate.set` Add in w/e values you need.
 
-7. You will also need the rclone beta. ```curl https://rclone.org/install.sh | sudo bash -s beta```
+7. You will also need the latest rclone, minimum version = 1.52. The beta is no longer needed. ```curl https://rclone.org/install.sh | sudo bash```
 
 8. Once you have done all this then you will need to restart the mounts you want to rotate before running this script. A command might look like this: ```sudo systemctl restart example.service```
 
@@ -70,3 +73,5 @@ Failed to rc: Failed to read rc response: 404 Not Found: {
   9. If you would like to check that it is running working correctly run: `sudo service sarotate status`
 ---
 
+## Troubleshooting
+Will add more as people run into any issues.
