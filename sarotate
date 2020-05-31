@@ -1,4 +1,4 @@
-!/usr/bin/env bash
+#!/usr/bin/env bash
 # Written by Visorak and 88lex ; Use latest rclone beta for best result
 # Usage: ./sarotate sarotate.set
 
