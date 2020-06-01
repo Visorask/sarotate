@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
-# Written by Visorak and 88lex ; Use latest rclone beta for best result
-# Usage: ./sarotate sarotate.set
+# Written by Visorak and 88lex
+# Usage: ./sarotate ; ./sarotate -c config.yml
 
-st="--stripComments"
-cf="config.yml"
+source library
 
 usage()
 {
@@ -25,28 +24,33 @@ shift $((OPTIND -1))
 
 optConfCheck() {
 if [ -z "$cf" ]; then 
-echo ""
-echo "ERROR: SARotate requires a configuration file." 
-echo ""
-usage
-exit 1
+  log_error "SARotate needs a configuration file."
+    usage
+     exit 1
 fi
-}
-
-optConfExist() {
-if [[ ! -d "$(yyq r "$st" "$cf" log.log_dir)" ]];then mkdir -p "$(yyq r "$st" "$cf" log.log_dir)"; fi
-if [[ ! -f "$(yyq r "$st" "$cf" log.log_file)" ]];then touch "$(yyq r "$st" "$cf" log.log_file)"; fi
 }
 
 mainInit () {
 COUNT="$(yyq r "$st" "$cf" global.minjs)"
 MOD=$(( "$(yyq r "$st" "$cf" global.maxjs)" - "$(yyq r "$st" "$cf" global.minjs)" + 1 ))
-    unset $notif_key; unset "$(yyq r "$st" "$cf" log.notif)"
-    if [[ "$(yyq r "$st" "$cf" log.notif)" = "key" ]];then notif_key=" tee >($(yyq r "$st" "$cf" log.notif))";fi
-    if [[ "$(yyq r "$st" "$cf" log.notif)" = "all" ]];then notif=" tee >($(yyq r "$st" "$cf" log.notif))" && notif_key="$(yyq r "$st" "$cf" log.notif)";fi
-    if [[ -d "$(yyq r "$st" "$cf" log.log_dir)" ]];then mkdir -p "$(yyq r "$st" "$cf" log.log_dir)"; fi
-    if [[ -f "$(yyq r "$st" "$cf" log.log_file)" ]];then touch "$(yyq r "$st" "$cf" log.log_file)"; fi
-    if [[ -f "$(yyq r "$st" "$cf" log.log_file)" ]];then tail -n 50 "$(yyq r "$st" "$cf" log.log_file)" > tmp;mv tmp "$(yyq r "$st" "$cf" log.log_file)";fi;
+unset $notif_key
+unset $notif
+if [[ "$(yyq r "$st" "$cf" log.notif)" = "key" ]]; then 
+  notif_key=" tee >($(yyq r "$st" "$cf" log.notif_cmd))"
+fi
+  if [[ "$(yyq r "$st" "$cf" log.notif)" = "all" ]]; then 
+    notif=" tee >($(yyq r "$st" "$cf" log.notif_cmd))" && notif_key="$notif"
+  fi
+    if [ ! -d "$(yyq r "$st" "$cf" log.log_dir)" ]; then 
+      mkdir -p "$(yyq r "$st" "$cf" log.log_dir)"
+    fi
+  if [ ! -f "$(yyq r "$st" "$cf" log.log_file)" ]; then 
+    touch "$(yyq r "$st" "$cf" log.log_file)"
+  fi
+if [[ -f "$(yyq r "$st" "$cf" log.log_file)" ]]; then 
+  tail -n 50 "$(yyq r "$st" "$cf" log.log_file)" > tmp
+  mv tmp "$(yyq r "$st" "$cf" log.log_file)"
+fi;
 }
 
 arrayCombine() {
@@ -55,22 +59,22 @@ readarray -t arrayPort < <(yyq r "$st" "$cf" main.port | sed -E 's/- +\ ?//g')
 }
 
 mainRotate () {
-echo -e "[$(date "+%d.%m.%Y %T") INFO]: SA Rotate is now initializing these mounts, starting with $(yyq r "$st" "$cf" global.json_dir)/$COUNT.json with an increment of $(yyq r "$st" "$cf" global.nextjs)" |& eval tee "$notif_key" | tee -a "$(yyq r "$st" "$cf" log.log_file)"
+log_info "SA Rotate is now initializing these mounts, starting with $(yyq r "$st" "$cf" global.json_dir)/$COUNT.json with an increment of $(yyq r "$st" "$cf" global.nextjs)." |& eval tee "$notif_key" | tee -a "$(yyq r "$st" "$cf" log.log_file)"
 jin=0
-while [[ $jin -lt ${#arrayRemote[*]} ]]; do
- echo -e "[$(date "+%d.%m.%Y %T") INFO]: Switching remote ${arrayRemote[$jin]%:*} to use service account $COUNT.json for $(yyq r "$st" "$cf" global.sleeptime)" |& eval tee "$notif_key" | tee -a "$(yyq r "$st" "$cf" log.log_file)"
+while [ $jin -lt ${#arrayRemote[*]} ]; do
+ log_info "Switching remote ${arrayRemote[$jin]%:*} to use service account $COUNT.json for $(yyq r "$st" "$cf" global.sleeptime)" |& eval tee "$notif" | tee -a "$(yyq r "$st" "$cf" log.log_file)"
     rclone rc --rc-user="$(yyq r "$st" "$cf" global.rc_user)" --rc-pass="$(yyq r "$st" "$cf" global.rc_pass)" --rc-addr "$(yyq r "$st" "$cf" rclone.ip)":"${arrayPort[$jin]}" backend/command command=set fs="${arrayRemote[$jin]%:*}": -o \
     service_account_file="$(yyq r "$st" "$cf" global.json_dir)"/"$COUNT".json --config="$(yyq r "$st" "$cf" rclone.rclone_config)" --log-level=ERROR |& eval tee "$notif_key" | tee -a "$(yyq r "$st" "$cf" log.log_file)"
    COUNT=$(( ((COUNT - "$(yyq r "$st" "$cf" global.minjs)" + "$(yyq r "$st" "$cf" global.nextjs)") % MOD) + "$(yyq r "$st" "$cf" global.minjs)" ))
   jin=$(( jin + 1 ));
 done
-echo -e "[$(date "+%d.%m.%Y %T") INFO]: SARotate will now go idle for $(yyq r "$st" "$cf" global.sleeptime)." | tee -a "$(yyq r "$st" "$cf" log.log_file)"
-sleep "$(yyq r "$st" "$cf" global.sleeptime)"
+log_info "SARotate will now go idle for $(yyq r "$st" "$cf" global.sleeptime)." | tee -a "$(yyq r "$st" "$cf" log.log_file)"
+  sleep "$(yyq r "$st" "$cf" global.sleeptime)"
 }
 
+yyqDetect
 optChoose "$@"
 optConfCheck
-optConfExist
 mainInit
 arrayCombine
 mainRotate

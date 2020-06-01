@@ -15,16 +15,16 @@ global:
 log:
   log_dir: "/opt/sarotate/logs/"
   log_file: "/opt/sarotate/logs/sarotate.log"
-  notif: "none"
+  notif: "all"
   notif_cmd: "apprise"
 # When filling these out you need to make sure the order of remote/port goes together or else 
 # the script will read wrong input/output and give errors.
 main:
   remote:
-   -  master_anime
-   -  master_movies
-   -  master_tv1
-   -  master_tv2
+   -  anime
+   -  movies
+   -  tv1
+   -  tv2
   port:
    -  5575
    -  5576
