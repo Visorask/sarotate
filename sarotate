@@ -3,7 +3,7 @@
 # Usage: ./sarotate sarotate.set
 
 st="--stripComments"
-cf="sarotate.yml"
+cf="config.yml"
 
 usage()
 {
