@@ -3,6 +3,13 @@ For rotating Google service accounts to bypass bans or any other myriad of reaso
 
 "I am not a coder. I have no idea what I am doing. Use at your own risk!"
 
+## Changelog v2.1
+   - [Added] A bash library of functions.
+   - [Added] Script now checks to see if dependencies are installed and if not, installs/updates them as needed.
+   - [Changed] Moved location of static variables into bash library.
+
+---
+
 ## Changelog v2.0
    - [Added] Script now uses a .yml config file.
    - [Added] The config file is passed through the CLI with the script by `-c`.
@@ -23,17 +30,8 @@ For rotating Google service accounts to bypass bans or any other myriad of reaso
 This script was created with the help of 88lex. It uses portion of his amazing sasync (https://github.com/88lex/sasync) script. This was written mainly for CloudBox users but can be utilized by anyone.
 
 # Requirements
- 1. yq: https://github.com/mikefarah/yq
-   - If you have Cloudbox installed then you will already have this installed.
-   - If you do not have Cloudbox you must follow the below steps to install it.
- 2. Install Instructions:
-   - Get current version of yq: `wget -qO- https://api.github.com/repos/mikefarah/yq/releases/latest | jq -r ".assets[] | select(.name | test(\"yq_linux_amd64\")) | .browser_download_url"`
-   - `sudo wget -o /usr/local/bin/ <insert above command result here>`
-   - `sudo mv /usr/local/bin/yq_linux_amd64 /usr/local/bin/yyq`
-   - `sudo chmod 775 /usr/local/bin/yyq`
-   - `sudo chown root:root /usr/local/bin/yyq`
-   - `yyq --version`
-  3. We rename this due to the fact that there is 2 other versions of yq out there that are named the same.
+ 1. Any dependencies needed are taken care of by the script besides rclone.
+ 2. rclone: `curl https://rclone.org/install.sh | sudo bash` | Minimum version of 1.51 but 1.52 is recommended.
   
 
 ## Installation
