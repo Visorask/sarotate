@@ -374,10 +374,10 @@ if [[ ! -x "/usr/bin/fd" ]]; then
     rm -rf fd_"$fd_ver"_amd64.deb
   log_info "$(fd -V) is now installed."
 fi
-if [[ "$(fd -V)" != "$fd_ver" ]]; then
+if [[ "$(fd -V | cut -d' ' -f2)" != "$fd_ver" ]]; then
   log_info "fd is already at the current version."
 else
-  log_info "Updating $(fd-V)" to "$fd_ver".
+  log_info "Updating $(fd -V)" to "$fd_ver".
     sudo dpkg -r fd
     curl -LO "$cmd_fd"
     sudo dpkg -i fd_"$fd_ver"_amd64.deb
@@ -398,7 +398,7 @@ if [[ ! -x "/usr/local/bin/yyq" ]]; then
     sudo chown root:root "/usr/local/bin/yyq"
   log_info "$(yyq --version) is now installed."
 fi
-if [[ "$(yyq --version)" != "$yyq_ver" ]]; then
+if [[ "$(yyq --version | cut -d' ' -f3)" == "$yyq_ver" ]]; then
   log_info "yyq is already at the current version."
 else
   log_info "Updating $(yyq --version) to $yyq_ver."
