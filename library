@@ -378,7 +378,6 @@ if [[ "$(fd -V | cut -d' ' -f2)" == "$fd_ver" ]]; then
   log_info "fd is already at the current version."
 else
   log_info "Updating $(fd -V)" to "$fd_ver".
-    sudo dpkg -r fd
     curl -LO "$cmd_fd"
     sudo dpkg -i fd_"$fd_ver"_amd64.deb
     rm -rf fd_"$fd_ver"_amd64.deb
