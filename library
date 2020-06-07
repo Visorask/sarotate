@@ -374,7 +374,7 @@ if [[ ! -x "/usr/bin/fd" ]]; then
     rm -rf fd_"$fd_ver"_amd64.deb
   log_info "$(fd -V) is now installed."
 fi
-if [[ "$(fd -V | cut -d' ' -f2)" != "$fd_ver" ]]; then
+if [[ "$(fd -V | cut -d' ' -f2)" == "$fd_ver" ]]; then
   log_info "fd is already at the current version."
 else
   log_info "Updating $(fd -V)" to "$fd_ver".
