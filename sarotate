@@ -61,8 +61,8 @@ readarray -t arrayPort < <(yyq r "$st" "$cf" main.port | sed -E 's/- +\ ?//g')
 
 mainRotate () {
 log_info "SA Rotate is now initializing these mounts, starting with $(yyq r "$st" "$cf" global.json_dir)/$COUNT.json with an increment of $(yyq r "$st" "$cf" global.nextjs)." |& eval tee "$notif_key" | tee -a "$(yyq r "$st" "$cf" log.log_file)"
-jin=0
 while : ;do
+jin=0
   while [ $jin -lt ${#arrayRemote[*]} ]; do
    log_info "Switching remote ${arrayRemote[$jin]%:*} to use service account $COUNT.json for $(yyq r "$st" "$cf" global.sleeptime)" |& eval tee "$notif" | tee -a "$(yyq r "$st" "$cf" log.log_file)"
    rclone rc --rc-user="$(yyq r "$st" "$cf" global.rc_user)" --rc-pass="$(yyq r "$st" "$cf" global.rc_pass)" --rc-addr "$(yyq r "$st" "$cf" rclone.ip)":"${arrayPort[$jin]}" backend/command command=set fs="${arrayRemote[$jin]%:*}": -o \
