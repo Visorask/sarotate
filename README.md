@@ -100,3 +100,8 @@ Failed to rc: Failed to read rc response: 404 Not Found: {
 
 ## Troubleshooting
 Will add more as people run into any issues.
+
+# Donations
+
+[PayPal](https://paypal.me/RRussell603?locale.x=en_US)
+BTC: 37iSj3YR1YP56fQi1Ue8fk1cYCuSmCugUB
