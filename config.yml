@@ -1,21 +1,34 @@
 # General rclone variables.
 rclone:
-  rclone_config: "$HOME/.config/rclone/rclone.conf"
+  # Default rclone config. Change this if you have a non-standard rclone config location.
+  rclone_config: "$HOME/.config/rclone/rclone.conf"  
+  # Match rclone rc mount user and pass. If you use --no-auth then leave as default.
   rc_user: "user"
+  # Match rclone rc mount user and pass. If you use --no-auth then leave as default.
   rc_pass: "pass"
+  # Default is localhost/127.0.0.1 but you can change this to match your IP for RC.
   ip: 127.0.0.1
 # Global variables
 global:
+  # Minimum json file that you want to use.
   minjs: 1
+  # Maximum json file that you want to use.
   maxjs: 16
+  # Use 1 or 101.  101 will split API usage to separate projects, but needs many service accounts.
   nextjs: 1
+  # Location of the directory with your service account files.
   json_dir: "/opt/sa/feederboxsa"
+  # Time the script will sleep for until running again.
   sleeptime: 15m
 # Log variables
 log:
+  # Directory for logs.
   log_dir: "/opt/sarotate/logs/"
+  # Name of log file.
   log_file: "/opt/sarotate/logs/sarotate.log"
+  # Set NOTIF="key" , "all" or "none". Key includes errors.
   notif: "none"
+  # Simple apprise command. Edit to taste.
   notif_cmd: "apprise"
 # When filling these out you need to make sure the order of remote/port goes together or else 
 # the script will read wrong input/output and give errors.
