@@ -65,7 +65,7 @@ while : ;do
   jin=0
   while [ $jin -lt ${#arrayRemote[*]} ]; do
     log_info "Switching remote ${arrayRemote[$jin]%:*} to use service account $COUNT.json for $(yyq r "$st" "$cf" global.sleeptime)" |& eval tee "$notif" | tee -a "$(yyq r "$st" "$cf" log.log_file)"
-      rclone rc --rc-user="$(yyq r "$st" "$cf" global.rc_user)" --rc-pass="$(yyq r "$st" "$cf" global.rc_pass)" --rc-addr "$(yyq r "$st" "$cf" rclone.ip)":"${arrayPort[$jin]}" backend/command command=set fs="${arrayRemote[$jin]%:*}": -o \
+      rclone rc --rc-user="$(yyq r "$st" "$cf" rclone.rc_user)" --rc-pass="$(yyq r "$st" "$cf" rclone.rc_pass)" --rc-addr "$(yyq r "$st" "$cf" rclone.ip)":"${arrayPort[$jin]}" backend/command command=set fs="${arrayRemote[$jin]%:*}": -o \
       service_account_file="$(yyq r "$st" "$cf" global.json_dir)"/"$COUNT".json --config="$(yyq r "$st" "$cf" rclone.rclone_config)" --log-level=ERROR |& eval tee "$notif_key" | tee -a "$(yyq r "$st" "$cf" log.log_file)"
       COUNT=$(( ((COUNT - "$(yyq r "$st" "$cf" global.minjs)" + "$(yyq r "$st" "$cf" global.nextjs)") % MOD) + "$(yyq r "$st" "$cf" global.minjs)" ))
   jin=$(( jin + 1 ));
