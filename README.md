@@ -43,13 +43,11 @@ This script was created with the help of 88lex. It uses portion of his amazing s
 
 4. `cd /opt/sarotate && chmod +x sarotate`
 
-5. `nano sarotate` Edit the variables to match your settings. Save and close.
+5. `nano config.yml` Edit the variables to match your settings. Save and close.
 
-6. `nano sarotate.set` Add in w/e values you need.
+6. You will also need the latest rclone, minimum version = 1.52. ```curl https://rclone.org/install.sh | sudo bash```
 
-7. You will also need the latest rclone, minimum version = 1.52. The beta is no longer needed. ```curl https://rclone.org/install.sh | sudo bash```
-
-8. Once you have done all this then you will need to restart the mounts you want to rotate before running this script. A command might look like this: ```sudo systemctl restart example.service```
+7. Once you have done all this then you will need to restart the mounts you want to rotate before running this script. A command might look like this: ```sudo systemctl restart <example>.service```
 
   Otherwise you might get an error like this:
 ```
@@ -75,9 +73,8 @@ Failed to rc: Failed to read rc response: 404 Not Found: {
    - `sudo nano /etc/systemd/system/<nameofmount>.service` (Fill in <nameofmount> with your information.)
    - `sudo systemctl daemon-reload`
    - `sudo systemctl restart /etc/systemd/system/<nameofmount>.service` (Fill in <nameofmount> with your information.)
-   - `./sarotate sarotate.set`
+   - `./sarotate -c <config>.yml`
    
-  You can also use this amazing script which has `--rc-no-auth` built into it, as well as, creating as many mounts as you want. https://github.com/maximuskowalski/smount/tree/sarotate-rclonebeta
   
 ---
    
