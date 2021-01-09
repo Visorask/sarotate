@@ -60,6 +60,14 @@ readarray -t arrayPort < <(yyq r "$st" "$cf" main.port | sed -E 's/- +\ ?//g')
 }
 
 mainRotate () {
+echo "**********************************************"
+echo "**                                          **"
+echo "**          SARotate Version 2.2            **"
+echo "**                                          **"
+echo "**       Written by Lex and Visorak         **"
+echo "**   https://github.com/Visorask/sarotate   **"
+echo "**                                          **"
+echo "**********************************************"
 log_info "SA Rotate is now initializing these mounts, starting with $(yyq r "$st" "$cf" global.json_dir)/$COUNT.json with an increment of $(yyq r "$st" "$cf" global.nextjs)." |& eval tee "$notif_key" | tee -a "$(yyq r "$st" "$cf" log.log_file)"
 while : ;do
   jin=0
