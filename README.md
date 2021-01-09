@@ -3,6 +3,13 @@ For rotating Google service accounts to bypass bans or any other myriad of reaso
 
 "I am not a coder. I have no idea what I am doing. Use at your own risk!"
 
+## Changelog 2.2
+   - [Added] Added header with version number and credits.
+   - [Changed/Fixed] Fixed the "yyq command not found" error that would pop up and now have it set to download a specific version. It now downloads version 3.4.1 all the time.
+   - [Removed] Deleted function for a check that is not needed from the library script.
+   
+---
+
 ## Changelog v2.1
    - [Added] A bash library of functions.
    - [Added] Script now checks to see if dependencies are installed and if not, installs/updates them as needed.
