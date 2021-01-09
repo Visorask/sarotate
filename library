@@ -363,27 +363,6 @@ st="--stripComments"
 
 ### End Required Variables ###
 
-### Detect if fd is installed. ###
-fdDetect() {
-cmd_fd=$(curl -sL "https://api.github.com/repos/sharkdp/fd/releases/latest" | grep "fd_.*_amd64" | grep "browser_download_url" | cut -d'"' -f4)
-fd_ver=$(curl -sL "https://api.github.com/repos/sharkdp/fd/releases/latest" | grep "fd_.*_amd64" | grep "browser_download_url" | cut -d'/' -f8 | cut -d'v' -f2)
-if [[ ! -x "/usr/bin/fd" ]]; then
-  log_info "Installing fd as it is needed for this script."
-    curl -LO "$cmd_fd"
-    sudo dpkg -i fd_"$fd_ver"_amd64.deb
-    rm -rf fd_"$fd_ver"_amd64.deb
-  log_info "$(fd -V) is now installed."
-fi
-if [[ "$(fd -V | cut -d' ' -f2)" == "$fd_ver" ]]; then
-  log_info "fd is already at the current version."
-else
-  log_info "Updating $(fd -V)" to "$fd_ver".
-    curl -LO "$cmd_fd"
-    sudo dpkg -i fd_"$fd_ver"_amd64.deb
-    rm -rf fd_"$fd_ver"_amd64.deb
-  log_info "$(fd -V) is updated."
-fi
-}
 
 ### Detect if yyq is installed
 yyqDetect() {
