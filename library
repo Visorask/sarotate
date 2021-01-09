@@ -365,27 +365,35 @@ st="--stripComments"
 
 
 ### Detect if yyq is installed
-yyqDetect() {
-cmd_yyq=$(curl -sL "https://api.github.com/repos/mikefarah/yq/releases/latest" | grep "yq_linux_amd64" | grep "browser_download_url" | cut -d'"' -f4)
-yyq_ver=$(curl -sL "https://api.github.com/repos/mikefarah/yq/releases/latest" | grep "yq_linux_amd64" | grep "browser_download_url" | cut -d'/' -f8)
-if [[ ! -x "/usr/local/bin/yyq" ]]; then
-  log_info "Installing yyq as it is needed for this script."
-    curl -LO "$cmd_yyq"
-    sudo mv yq_linux_amd64 "/usr/local/bin/yyq"
-    sudo chmod 775 "/usr/local/bin/yyq"
-    sudo chown root:root "/usr/local/bin/yyq"
-  log_info "$(yyq --version) is now installed."
-fi
+
+yyq_ver=3.4.1
+yyqUpdate() {
 if [[ "$(yyq --version | cut -d' ' -f3)" == "$yyq_ver" ]]; then
-  log_info "yyq is already at the current version."
+  log_info "----yyq is at version $yyq_ver."
+  log_info "----Version check complete."
 else
-  log_info "Updating $(yyq --version) to $yyq_ver."
+  log_info "----yyq version is out of date, updating now."
+  log_info "----Updating $(yyq --version) to $yyq_ver."
     sudo rm -rf "usr/local/bin/yyq"
-    curl -LO "$cmd_yyq"
+    curl -LO https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64
     sudo mv yq_linux_amd64 "/usr/local/bin/yyq"
     sudo chmod 775 "/usr/local/bin/yyq"
     sudo chown root:root "/usr/local/bin/yyq"
   log_info "$(yyq --version) is now updated."
+fi
+}
+
+yyqDetect() {  
+if [[ ! -x "/usr/local/bin/yyq" ]]; then
+  log_info "----Installing yyq as it is needed for this script."
+    curl -LO https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64
+    sudo mv yq_linux_amd64 "/usr/local/bin/yyq"
+    sudo chmod 775 "/usr/local/bin/yyq"
+    sudo chown root:root "/usr/local/bin/yyq"
+  log_info "$(yyq --version) is now installed."
+else 
+  log_info "----Checking if version is $yyq_ver."
+yyqUpdate
 fi
 }
 
