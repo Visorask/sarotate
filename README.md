@@ -24,7 +24,7 @@ For rotating Google service accounts to bypass bans or any other myriad of reaso
    - [Deleted] Old versions.
 
 ## What is it?
-This script was created with the help of 88lex. It uses portion of his amazing sasync (https://github.com/88lex/sasync) script. This was written mainly for CloudBox users but can be utilized by anyone.
+This script was created with the help of 88lex. This was written mainly for CloudBox users but can be utilized by anyone.
 
 # Requirements
  1. Any dependencies needed are taken care of by the script besides rclone.
@@ -39,7 +39,7 @@ This script was created with the help of 88lex. It uses portion of his amazing s
 
 4. `cd /opt/sarotate && chmod +x sarotate`
 
-5. `cp config.yml.sample` if you want comments in your config or `cp config.yml.nocomments` if you do not want comments.
+5. `cp config.yml.sample config.yml` if you want comments in your config or `cp config.yml.nocomments config.yml` if you do not want comments.
 
 # Config
 ```yml
