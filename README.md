@@ -7,10 +7,10 @@ For rotating Google service accounts to bypass bans or any other myriad of reaso
    - [Added] Script will check to see if the config you loaded exists, has information and if it matches the name you input.
    - [Added] Much better logic for the handling of rotation.
    - [Added] Now has much more error handling built in to prevent simple mistakes.
-   - [Added] Has a new -h | help option to let you know how to run the script. `./sarotate -h`
-   - [Added] Can utilize the same service account on all teamdrives if you wish with in the config.
-   - [Added] Script will not check to see if your service accounts are within the minjs and maxjs set inside the config.
-   - [Added] Script will not "remember" the last used service account. It does this by reading the last set service account and uses logic to determine if it needs to change it or use it.
+   - [Added] Has a new `-h | help` option to let you know how to run the script. `./sarotate -h`
+   - [Added] Can utilize the same service account on all teamdrives if you wish within the config.
+   - [Added] Script will now check to see if your service accounts are within the minjs and maxjs set inside the config.
+   - [Added] Script will now "remember" the last used service account. It does this by reading the last set service account and uses logic to determine if it needs to change it or use it.
    - [Added] Script will now rotate logs based on the size you have set. It will keep the last log file but with an appended number.
    - [Changed] Overall improved and made the script easier to read and fixed issues it had before.
    - [Changed] Changed apprise notifications. Now supports discord/slack by default with the config file.
