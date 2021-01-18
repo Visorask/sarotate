@@ -39,11 +39,9 @@ This script was created with the help of 88lex. It uses portion of his amazing s
 
 4. `cd /opt/sarotate && chmod +x sarotate`
 
-5. `nano config.yml` Edit the variables to match your settings. Save and close.
+5. `cp config.yml.sample` if you want comments in your config or `cp config.yml.nocomments` if you do not want comments.
 
-6. Once you have done all this then you will need to restart the mounts you want to rotate before running this script. A command might look like this: ```sudo systemctl restart <example>.service```
-
-## Config
+# Config
 ```yml
 # General rclone variables.
 rclone:
@@ -108,6 +106,11 @@ main:
    - 5574
    - 5575
 ```   
+
+6. `nano config.yml` Edit the variables to match your settings. Save and close.
+
+7. Once you have done all this then you will need to restart the mounts you want to rotate before running this script. A command might look like this: ```sudo systemctl restart <example>.service```
+
   Otherwise you might get an error like this:
 ```
 Failed to rc: Failed to read rc response: 404 Not Found: {
