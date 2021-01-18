@@ -1,7 +1,0 @@
-#You may have uncommented lines if you so choose like this one and the one below.
-#This is for people utilizing a non-union mount.
-
-#remotename       port
-remote1           1111
-remote2           2222
-remote3           3333

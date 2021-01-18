@@ -1,14 +1,13 @@
 [Unit]
-Description=sarotate     
+Description=sarotate
 After=network-online.target
 
 [Service]
-User=changethis
-Group=changethis
+User=<changethis>
+Group=<changethis>
 Type=simple
 WorkingDirectory=/opt/sarotate
-ExecStartPre=/bin/sleep 30
-ExecStart=/bin/bash /opt/sarotate/sarotate sarotate.set
+ExecStart=/bin/bash /opt/sarotate/sarotate -c config.yml
 Restart=always
 RestartSec=10
 

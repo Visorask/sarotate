@@ -1,0 +1,33 @@
+rclone:
+  rclone_config: "$HOME/.config/rclone/rclone.conf"
+  rc_user: "user"
+  rc_pass: "pass"
+  ip: 127.0.0.1
+global:
+  minjs: 3900
+  maxjs: 14000
+  nextjs: 101
+  json_dir: "/your/path/here"
+  sleeptime: 15m
+  same_sa: off
+log:
+  logr_name: "sarotatetest"
+  logr_dir: "/opt/sarotate/logs"
+  logr_size: 1
+  logr_detail: verbose
+  log_level: ERROR
+apprise:
+  notif: discord
+  disc_id: "{WebhookID}/{WebhookToken}"
+  slack_id: "{tokenA}/{tokenB}/{tokenC}"
+main:
+  remote:
+   - teamdrive1
+   - teamdrive2
+   - teamdrive3
+   - teamdrive4
+  port:
+   - 5572
+   - 5573
+   - 5574
+   - 5575

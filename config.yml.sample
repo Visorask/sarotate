@@ -1,0 +1,62 @@
+# General rclone variables.
+rclone:
+  # Default rclone config. Change this if you have a non-standard rclone config location.
+  rclone_config: "$HOME/.config/rclone/rclone.conf"
+  # Match rclone rc mount user and pass. If you use --no-auth then leave as default.
+  rc_user: "user"
+  # Match rclone rc mount user and pass. If you use --no-auth then leave as default.
+  rc_pass: "pass"
+  # Default is localhost/127.0.0.1 but you can change this to match your IP for RC.
+  ip: 127.0.0.1
+# Global variables
+global:
+  # Minimum json file that you want to use.
+  minjs: 3900
+  # Maximum json file that you want to use.
+  maxjs: 14000
+  # Use 1 or 101.  101 will split API usage to separate projects, but needs many service accounts.
+  nextjs: 101
+  # Location of the directory with your service account files.
+  json_dir: "/your/path/here"
+  # Time the script will sleep for until running again.
+  sleeptime: 15m
+  # Set this if you would like to use the same service account for all remotes.
+  # |on|off(default)|
+  same_sa: off
+# Log variables
+log:
+  # Name that you want your log file to have.
+  logr_name: "sarotatetest"
+  # Directory that you want your log files stored in.
+  logr_dir: "/opt/sarotate/logs"
+  # At what size do you want your log to rotate. 1 is default. (MB)
+  logr_size: 1
+  # How detailed do you want your output to be from the script.
+  # |quiet(Supresses everything except errors and rclone output.)|verbose(default)(Everything is printed.)|
+  logr_detail: verbose
+  # rclone --log-level.
+  # |DEBUG|INFO|ERROR(recommended)|NOTICE(default for rclone)|
+  log_level: ERROR
+apprise:
+  # Apprise notifications.
+  # |discord|slack|off(default)|
+  notif: discord
+  # Insert discord webhook information.
+  # https://github.com/caronc/apprise/wiki/Notify_discord
+  disc_id: "{WebhookID}/{WebhookToken}"
+  # Insert webhook information.
+  # https://github.com/caronc/apprise/wiki/Notify_slack
+  slack_id: "{tokenA}/{tokenB}/{tokenC}"
+# When filling these out you need to make sure the order of remote/port goes together or else
+# the script will read wrong input/output and give errors.
+main:
+  remote:
+   - teamdrive1
+   - teamdrive2
+   - teamdrive3
+   - teamdrive4
+  port:
+   - 5572
+   - 5573
+   - 5574
+   - 5575
