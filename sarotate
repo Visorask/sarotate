@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 # Written by Visorak and 88lex
 
 # Calling this library to add logging functionality.
