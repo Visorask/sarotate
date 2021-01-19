@@ -66,7 +66,9 @@ fi
 }
 
 apprise_notify() {
-if [[ "$(yq apprise.notif)" == "discord" ]]; then
+if [[ "$(yq apprise.notif)" == "off" ]]; then
+  return 0
+elif [[ "$(yq apprise.notif)" == "discord" ]]; then
   apprise -v -b "$1" discord://"$(yq apprise.disc_id)"
 elif [[ "$(yq apprise.notif)" == "slack" ]]; then
   apprise -v -b "$1" https://hooks.slack.com/services/"$(yq apprise.slack_id)"
@@ -144,7 +146,7 @@ log_rotate () {
   local B
   B="$(basename "$F" ."$E")"
   local s=
-  logr info "rotate msize=$msize file=$F -> $D | $B | $E"
+  logr info "Log rotation: msize=$msize file=$F -> $D | $B | $E"
   if [ "$(stat --printf %s "$F")" -ge $msize ] ; then
      for i in 8 9 7 6 5 4 3 2 1 0; do
        s="$D/$B-$i.$E"
@@ -154,7 +156,7 @@ log_rotate () {
      done &&
      mv "$F" "$D"/"$B"-0."$E"
   else
-     logr info "rotate skip: $F < $msize, skip"
+     logr info "Skipping log rotation: $F < $msize"
   fi
   return $?
 }
@@ -163,7 +165,7 @@ log_rotate () {
 main_rotate () {
 echo "**********************************************"
 echo "**                                          **"
-echo "**          SARotate Version 3.0            **"
+echo "**          SARotate Version 3.1            **"
 echo "**                                          **"
 echo "**       Written by Lex and Visorak         **"
 echo "**   https://github.com/Visorask/sarotate   **"
