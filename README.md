@@ -92,6 +92,9 @@ apprise:
   # Insert webhook information.
   # https://github.com/caronc/apprise/wiki/Notify_slack
   slack_id: "{tokenA}/{tokenB}/{tokenC}"
+  # Insert webhook information.
+  # https://github.com/caronc/apprise/wiki/Notify_pushover
+  pushover_id: "{user_key}@{token}"
 # When filling these out you need to make sure the order of remote/port goes together or else
 # the script will read wrong input/output and give errors.
 main:
