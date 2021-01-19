@@ -20,6 +20,7 @@ apprise:
   notif: discord
   disc_id: "{WebhookID}/{WebhookToken}"
   slack_id: "{tokenA}/{tokenB}/{tokenC}"
+  pushover_id: "{user_key}@{token}"
 main:
   remote:
    - teamdrive1
