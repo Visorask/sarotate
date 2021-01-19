@@ -70,6 +70,8 @@ if [[ "$(yq apprise.notif)" == "discord" ]]; then
   apprise -v -b "$1" discord://"$(yq apprise.disc_id)"
 elif [[ "$(yq apprise.notif)" == "slack" ]]; then
   apprise -v -b "$1" https://hooks.slack.com/services/"$(yq apprise.slack_id)"
+elif [[ "$(yq apprise.notif)" == "pushover" ]]; then
+  apprise -v -b "$1" pover://"$(yq apprise.pushover_id)"
 fi
 }
 
