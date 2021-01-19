@@ -1,6 +1,12 @@
 # SARotate
 For rotating Google service accounts to bypass bans or any other myriad of reasons.
 
+## Changelog 3.1
+   - [Added] Pushover support for apprise. If your apprise notification is not a part of the script yet let me know.
+   - [Changed] Added return code so the apprise doesn't go through every option, and only the 1 if off is returned.
+   - [Changed] Changed text a little bit for log rotation.
+   - [Fixed] Logr would return an issue with a character of the code. It is now fixed.
+
 ## Changelog 3.0
    - [Added] New version.
    - [Added] Uses a logger to easily identify issues.
