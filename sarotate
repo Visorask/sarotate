@@ -110,8 +110,8 @@ readarray -t arrayPort < <(yq main.port | sed -E 's/- +\ ?//g')
 readarray -t arrayShow < <(for r in "${arrayRemote[@]}"; do rclone config show "$r" | grep "/*.json" | rev | cut -d/ -f1 | rev | cut -d. -f1; done)
 declare -a tmp_array
 for i in "${arrayShow[@]}"; do
-  if [[ "$i" -lt "$(yq global.minjs)" || "$i" -gt "$(yq global.maxjs)" ]]; then
-    logr error "Service account $i is outside the minjs: $(yq global.minjs) and maxjs: $(yq global.maxjs) set in the config file."
+  if [[ "$i" -lt "$(yq global.minsa)" || "$i" -gt "$(yq global.maxsa)" ]]; then
+    logr error "Service account $i is outside the minsa: $(yq global.minsa) and maxsa: $(yq global.maxsa) set in the config file."
     logr error "Correct this and run the script again."
     logr error "The script will now exit."
     exit 1
@@ -119,10 +119,10 @@ for i in "${arrayShow[@]}"; do
     tmp_array+=("${i}")
     tmp_array+=("${i}")
     break
-  elif [[ "$i" -ne "$(yq global.minjs)" ]]; then
+  elif [[ "$i" -ne "$(yq global.minsa)" ]]; then
     tmp_array+=("${i}")
   else
-    tmp_array+=("$(yq global.minjs)")
+    tmp_array+=("$(yq global.minsa)")
   fi
 done
 readarray -t count < <(printf '%d\n' "${tmp_array[@]}")
@@ -172,7 +172,7 @@ echo "**   https://github.com/Visorask/sarotate   **"
 echo "**                                          **"
 echo "**********************************************"
 logr info "SA Rotate is now initializing."
-MOD="$(( $(yq global.maxjs) - $(yq global.minjs) + 1 ))"
+MOD="$(( $(yq global.maxsa) - $(yq global.minsa) + 1 ))"
 while : ; do
 log_rotate "$log_size" "$__logr_LOG_DIR"/"$__logr_DEFAULT_LOG".log
   SA=0
@@ -187,7 +187,7 @@ log_rotate "$log_size" "$__logr_LOG_DIR"/"$__logr_DEFAULT_LOG".log
     service_account_file="$(yq global.json_dir)"/"${count[$SA]}".json \
     --config="$(yq rclone.rclone_config)" \
     --log-level="$(yq log.log_level)"
-  count[$SA]="$(( ((${count[$SA]} - "$(yq global.minjs)" + "$(yq global.nextjs)") % MOD) + "$(yq global.minjs)" ))"
+  count[$SA]="$(( ((${count[$SA]} - "$(yq global.minsa)" + "$(yq global.nextsa)") % MOD) + "$(yq global.minsa)" ))"
   SA=$(( SA + 1 ));
   done
 logr info "SARotate will now go idle for $(yq global.sleeptime)."
