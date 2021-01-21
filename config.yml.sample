@@ -15,7 +15,7 @@ global:
   # Maximum json file that you want to use.
   maxsa: 50
   # Use 1 or 101.  101 will split API usage to separate projects, but needs many service accounts.
-  nextjs: 1
+  nextsa: 1
   # Location of the directory with your service account files.
   json_dir: "/your/path/here"
   # Time the script will sleep for until running again.
