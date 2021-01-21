@@ -11,9 +11,9 @@ rclone:
 # Global variables
 global:
   # Minimum json file that you want to use.
-  minjs: 3900
+  minsa: 1
   # Maximum json file that you want to use.
-  maxjs: 14000
+  maxsa: 50
   # Use 1 or 101.  101 will split API usage to separate projects, but needs many service accounts.
   nextjs: 101
   # Location of the directory with your service account files.
