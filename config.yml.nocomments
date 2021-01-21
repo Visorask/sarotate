@@ -4,9 +4,9 @@ rclone:
   rc_pass: "pass"
   ip: 127.0.0.1
 global:
-  minjs: 3900
-  maxjs: 14000
-  nextjs: 101
+  minsa: 1
+  maxsa: 50
+  nextsa: 101
   json_dir: "/your/path/here"
   sleeptime: 15m
   same_sa: off
