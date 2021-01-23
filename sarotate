@@ -13,36 +13,36 @@ readarray -t conf < <(find "$script_dir" -iname "*.yml" | rev | cut -d/ -f1 | re
 
 # Added yyq command to function to easier call it later for simplicity and visual aesthetics.
 yq() {
-yyq r "$st" "$cf" "$@"
+    yyq r "$st" "$cf" "$@"
 }
 
 usage() {
-echo "Usage:"
-echo ""
-echo "    ./sarotate -h                           Display this help message."
-echo "    ./sarotate -c <custom_config.yml>       Enter your custom named config file."
-echo ""
+    echo "Usage:"
+    echo ""
+    echo "    ./sarotate -h                           Display this help message."
+    echo "    ./sarotate -c <custom_config.yml>       Enter your custom named config file."
+    echo ""
 }
 
 config_yml() {
-if [[ "${conf[*]}" =~ ${OPTARG} ]]; then
-  cf=$OPTARG
-else
-  echo "The script did not find a config file named $OPTARG."
-  echo "Check your spelling or verify it exists. The script will now exit."
-  exit 1
-fi
+    if [[ "${conf[*]}" =~ ${OPTARG} ]]; then
+        cf=$OPTARG
+    else
+        echo "The script did not find a config file named $OPTARG."
+        echo "Check your spelling or verify it exists. The script will now exit."
+        exit 1
+    fi
 }
 
 # Define options to input from command line.
 while getopts c:h opt; do
     case "${opt}" in
-      c) config_yml;;
-      h) usage
-         exit 0;;
-     \?) echo "Invalid option: -$OPTARG. Use ./sarotate -h for how to use this script." 1>&2
-         exit 1;;
-      :) echo "Invalid option: $OPTARG requires an argument" 1>&2;;
+        c) config_yml;;
+        h) usage
+        exit 0;;
+        \?) echo "Invalid option: -$OPTARG. Use ./sarotate -h for how to use this script." 1>&2
+        exit 1;;
+        :) echo "Invalid option: $OPTARG requires an argument" 1>&2;;
     esac
 done
 shift $((OPTIND -1))
@@ -58,142 +58,142 @@ logr start "$log_detail"
 
 # Check to see if a config file is supplied.
 config_check() {
-if [ -z "$cf" ]; then
-  logr error "SARotate needs a configuration file."
-  usage
-  exit 1
-fi
+    if [ -z "$cf" ]; then
+        logr error "SARotate needs a configuration file."
+        usage
+        exit 1
+    fi
 }
 
 apprise_notify() {
-if [[ "$(yq apprise.notif)" == "off" ]]; then
-  return 0
-elif [[ "$(yq apprise.notif)" == "discord" ]]; then
-  apprise -v -b "$1" discord://"$(yq apprise.disc_id)"
-elif [[ "$(yq apprise.notif)" == "slack" ]]; then
-  apprise -v -b "$1" https://hooks.slack.com/services/"$(yq apprise.slack_id)"
-elif [[ "$(yq apprise.notif)" == "pushover" ]]; then
-  apprise -v -b "$1" pover://"$(yq apprise.pushover_id)"
-fi
+    if [[ "$(yq apprise.notif)" == "off" ]]; then
+        return 0
+        elif [[ "$(yq apprise.notif)" == "discord" ]]; then
+        apprise -v -b "$1" discord://"$(yq apprise.disc_id)"
+        elif [[ "$(yq apprise.notif)" == "slack" ]]; then
+        apprise -v -b "$1" https://hooks.slack.com/services/"$(yq apprise.slack_id)"
+        elif [[ "$(yq apprise.notif)" == "pushover" ]]; then
+        apprise -v -b "$1" pover://"$(yq apprise.pushover_id)"
+    fi
 }
 
 yyq_detect() {
-if [[ ! -x "/usr/local/bin/yyq" ]]; then
-  logr info "Installing yyq as it is needed for this script."
-  curl -LO "https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64"
-  sudo mv yq_linux_amd64 "/usr/local/bin/yyq"
-  sudo chmod 0775 "/usr/local/bin/yyq"
-  sudo chown root:root "/usr/local/bin/yyq"
-  logr info "$(yyq --version) is now installed."
-else
-  logr info "Checking if version is $yyq_ver."
-  if [[ "$(yyq --version | cut -d' ' -f3)" == "$yyq_ver" ]]; then
-    logr info "yyq is at version $yyq_ver."
-    logr info "Version check complete."
-  else
-    logr info "yyq version is out of date, updating now."
-    logr info "Updating $(yyq --version) to $yyq_ver."
-    sudo rm -rf "usr/local/bin/yyq"
-    curl -LO "https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64"
-    sudo mv yq_linux_amd64 "/usr/local/bin/yyq"
-    sudo chmod 0775 "/usr/local/bin/yyq"
-    sudo chown root:root "/usr/local/bin/yyq"
-    logr info "$(yyq --version) is now updated."
-  fi
-fi
+    if [[ ! -x "/usr/local/bin/yyq" ]]; then
+        logr info "Installing yyq as it is needed for this script."
+        curl -LO "https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64"
+        sudo mv yq_linux_amd64 "/usr/local/bin/yyq"
+        sudo chmod 0775 "/usr/local/bin/yyq"
+        sudo chown root:root "/usr/local/bin/yyq"
+        logr info "$(yyq --version) is now installed."
+    else
+        logr info "Checking if version is $yyq_ver."
+        if [[ "$(yyq --version | cut -d' ' -f3)" == "$yyq_ver" ]]; then
+            logr info "yyq is at version $yyq_ver."
+            logr info "Version check complete."
+        else
+            logr info "yyq version is out of date, updating now."
+            logr info "Updating $(yyq --version) to $yyq_ver."
+            sudo rm -rf "usr/local/bin/yyq"
+            curl -LO "https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64"
+            sudo mv yq_linux_amd64 "/usr/local/bin/yyq"
+            sudo chmod 0775 "/usr/local/bin/yyq"
+            sudo chown root:root "/usr/local/bin/yyq"
+            logr info "$(yyq --version) is now updated."
+        fi
+    fi
 }
 
 # This function defines all the variables and arrays needed for the main_rotate function.
 array_combine() {
-readarray -t arrayRemote < <(yq main.remote | sed -E 's/- +\ ?//g')
-readarray -t arrayPort < <(yq main.port | sed -E 's/- +\ ?//g')
-readarray -t arrayShow < <(for r in "${arrayRemote[@]}"; do rclone config show "$r" | grep "/*.json" | rev | cut -d/ -f1 | rev | cut -d. -f1; done)
-declare -a tmp_array
-for i in "${arrayShow[@]}"; do
-  if [[ "$i" -lt "$(yq global.minsa)" || "$i" -gt "$(yq global.maxsa)" ]]; then
-    logr error "Service account $i is outside the minsa: $(yq global.minsa) and maxsa: $(yq global.maxsa) set in the config file."
-    logr error "Correct this and run the script again."
-    logr error "The script will now exit."
-    exit 1
-  elif [[ "$(yq global.same_sa)" == "on" ]]; then
-    tmp_array+=("${i}")
-    tmp_array+=("${i}")
-    break
-  elif [[ "$i" -ne "$(yq global.minsa)" ]]; then
-    tmp_array+=("${i}")
-  else
-    tmp_array+=("$(yq global.minsa)")
-  fi
-done
-readarray -t count < <(printf '%d\n' "${tmp_array[@]}")
+    readarray -t arrayRemote < <(yq main.remote | sed -E 's/- +\ ?//g')
+    readarray -t arrayPort < <(yq main.port | sed -E 's/- +\ ?//g')
+    readarray -t arrayShow < <(for r in "${arrayRemote[@]}"; do rclone config show "$r" | grep "/*.json" | rev | cut -d/ -f1 | rev | cut -d. -f1; done)
+    declare -a tmp_array
+    for i in "${arrayShow[@]}"; do
+        if [[ "$i" -lt "$(yq global.minsa)" || "$i" -gt "$(yq global.maxsa)" ]]; then
+            logr error "Service account $i is outside the minsa: $(yq global.minsa) and maxsa: $(yq global.maxsa) set in the config file."
+            logr error "Correct this and run the script again."
+            logr error "The script will now exit."
+            exit 1
+            elif [[ "$(yq global.same_sa)" == "on" ]]; then
+            tmp_array+=("${i}")
+            tmp_array+=("${i}")
+            break
+            elif [[ "$i" -ne "$(yq global.minsa)" ]]; then
+            tmp_array+=("${i}")
+        else
+            tmp_array+=("$(yq global.minsa)")
+        fi
+    done
+    readarray -t count < <(printf '%d\n' "${tmp_array[@]}")
 }
 
 # This function is for rotating the logr log file. Needs two arguments. 1st: <Filesize in MB> 2nd: <Directory/Filename>
 log_rotate () {
-  # minimum file size to rotate in MBi:
-  local MB
-  MB="$1"
-  # filename to rotate (full path)
-  local F
-  F="$2"
-  local msize
-  msize="$((1024*1024*MB))"
-  [ -e "$F" ] || return 2
-  local D
-  D="$(dirname "$F")"
-  local E
-  E=${F##*.}
-  local B
-  B="$(basename "$F" ."$E")"
-  local s=
-  logr info "Log rotation: msize=$msize file=$F -> $D | $B | $E"
-  if [ "$(stat --printf %s "$F")" -ge $msize ] ; then
-     for i in 8 9 7 6 5 4 3 2 1 0; do
-       s="$D/$B-$i.$E"
-       [ -e "$s" ] && mv "$s" "$D/$B-$((i+1)).$E"
-  # empty command is need to avoid exit iteration if test fails:
-       :;
-     done &&
-     mv "$F" "$D"/"$B"-0."$E"
-  else
-     logr info "Skipping log rotation: $F < $msize"
-  fi
-  return $?
+    # minimum file size to rotate in MBi:
+    local MB
+    MB="$1"
+    # filename to rotate (full path)
+    local F
+    F="$2"
+    local msize
+    msize="$((1024*1024*MB))"
+    [ -e "$F" ] || return 2
+    local D
+    D="$(dirname "$F")"
+    local E
+    E=${F##*.}
+    local B
+    B="$(basename "$F" ."$E")"
+    local s=
+    logr info "Log rotation: msize=$msize file=$F -> $D | $B | $E"
+    if [ "$(stat --printf %s "$F")" -ge $msize ] ; then
+        for i in 8 9 7 6 5 4 3 2 1 0; do
+            s="$D/$B-$i.$E"
+            [ -e "$s" ] && mv "$s" "$D/$B-$((i+1)).$E"
+            # empty command is need to avoid exit iteration if test fails:
+            :;
+        done &&
+        mv "$F" "$D"/"$B"-0."$E"
+    else
+        logr info "Skipping log rotation: $F < $msize"
+    fi
+    return $?
 }
 
 # This function defines the bulk of the script and actually does the rotation.
 main_rotate () {
-echo "**********************************************"
-echo "**                                          **"
-echo "**          SARotate Version 3.1            **"
-echo "**                                          **"
-echo "**       Written by Lex and Visorak         **"
-echo "**   https://github.com/Visorask/sarotate   **"
-echo "**                                          **"
-echo "**********************************************"
-logr info "SA Rotate is now initializing."
-MOD="$(( $(yq global.maxsa) - $(yq global.minsa) + 1 ))"
-while : ; do
-log_rotate "$log_size" "$__logr_LOG_DIR"/"$__logr_DEFAULT_LOG".log
-  SA=0
-  while [[ "$SA" -lt "${#arrayRemote[*]}" ]]; do
-    logr info "Switching remote ${arrayRemote[$SA]%:*} to use service account ${count[$SA]}.json for $(yq global.sleeptime)."
-    apprise_notify "Switching remote ${arrayRemote[$SA]%:*} to use service account ${count[$SA]}.json for $(yq global.sleeptime)."
-    rclone rc \
-    --rc-user="$(yq rclone.rc_user)" \
-    --rc-pass="$(yq rclone.rc_pass)" \
-    --rc-addr="$(yq rclone.ip)":"${arrayPort[$SA]}" \
-    backend/command command=set fs="${arrayRemote[$SA]%:*}": -o \
-    service_account_file="$(yq global.json_dir)"/"${count[$SA]}".json \
-    --config="$(yq rclone.rclone_config)" \
-    --log-level="$(yq log.log_level)"
-  count[$SA]="$(( ((${count[$SA]} - "$(yq global.minsa)" + "$(yq global.nextsa)") % MOD) + "$(yq global.minsa)" ))"
-  SA=$(( SA + 1 ));
-  done
-logr info "SARotate will now go idle for $(yq global.sleeptime)."
-apprise_notify "SARotate will now go idle for $(yq global.sleeptime)."
-sleep "$(yq global.sleeptime)"
-done;
+    echo "**********************************************"
+    echo "**                                          **"
+    echo "**          SARotate Version 3.1            **"
+    echo "**                                          **"
+    echo "**       Written by Lex and Visorak         **"
+    echo "**   https://github.com/Visorask/sarotate   **"
+    echo "**                                          **"
+    echo "**********************************************"
+    logr info "SA Rotate is now initializing."
+    MOD="$(( $(yq global.maxsa) - $(yq global.minsa) + 1 ))"
+    while : ; do
+        log_rotate "$log_size" "$__logr_LOG_DIR"/"$__logr_DEFAULT_LOG".log
+        SA=0
+        while [[ "$SA" -lt "${#arrayRemote[*]}" ]]; do
+            logr info "Switching remote ${arrayRemote[$SA]%:*} to use service account ${count[$SA]}.json for $(yq global.sleeptime)."
+            apprise_notify "Switching remote ${arrayRemote[$SA]%:*} to use service account ${count[$SA]}.json for $(yq global.sleeptime)."
+            rclone rc \
+            --rc-user="$(yq rclone.rc_user)" \
+            --rc-pass="$(yq rclone.rc_pass)" \
+            --rc-addr="$(yq rclone.ip)":"${arrayPort[$SA]}" \
+            backend/command command=set fs="${arrayRemote[$SA]%:*}": -o \
+            service_account_file="$(yq global.json_dir)"/"${count[$SA]}".json \
+            --config="$(yq rclone.rclone_config)" \
+            --log-level="$(yq log.log_level)"
+            count[$SA]="$(( ((${count[$SA]} - "$(yq global.minsa)" + "$(yq global.nextsa)") % MOD) + "$(yq global.minsa)" ))"
+            SA=$(( SA + 1 ));
+        done
+        logr info "SARotate will now go idle for $(yq global.sleeptime)."
+        apprise_notify "SARotate will now go idle for $(yq global.sleeptime)."
+        sleep "$(yq global.sleeptime)"
+    done;
 }
 
 yyq_detect
