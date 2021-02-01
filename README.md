@@ -57,6 +57,23 @@ This script was created with the help of 88lex. This was written mainly for Clou
 
 7. Once you have done all this then you will need to restart the mounts you want to rotate before running this script. A command might look like this: ```sudo systemctl restart <example>.service```
 
+  Otherwise you might get an error like this:
+
+```json
+Failed to rc: Failed to read rc response: 404 Not Found: {
+        "error": "couldn't find method \"backend/command\"",
+        "input": {
+                "command": "set",
+                "fs": "<remotename>:",
+                "opt": {
+                        "service_account_file": "<file/path/1.json>"
+                }
+        },
+        "path": "backend/command",
+        "status": 404
+}
+```
+
 ## Config
 
 ```yml
@@ -125,23 +142,6 @@ main:
    - 5573
    - 5574
    - 5575
-```
-
-  Otherwise you might get an error like this:
-
-```json
-Failed to rc: Failed to read rc response: 404 Not Found: {
-        "error": "couldn't find method \"backend/command\"",
-        "input": {
-                "command": "set",
-                "fs": "<remotename>:",
-                "opt": {
-                        "service_account_file": "<file/path/1.json>"
-                }
-        },
-        "path": "backend/command",
-        "status": 404
-}
 ```
 
 ---
