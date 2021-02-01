@@ -26,7 +26,7 @@ global:
 # Log variables
 log:
   # Name that you want your log file to have.
-  logr_name: "sarotatetest"
+  logr_name: "sarotate"
   # Directory that you want your log files stored in.
   logr_dir: "/opt/sarotate/logs"
   # At what size do you want your log to rotate. 1 is default. (MB)
@@ -40,7 +40,7 @@ log:
 apprise:
   # Apprise notifications.
   # |discord|slack|pushover|off(default)|
-  notif: discord
+  notif: off
   # Insert discord webhook information.
   # https://github.com/caronc/apprise/wiki/Notify_discord
   disc_id: "{WebhookID}/{WebhookToken}"
