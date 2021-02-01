@@ -17,7 +17,7 @@ log:
   logr_detail: verbose
   log_level: ERROR
 apprise:
-  notif: discord
+  notif: off
   disc_id: "{WebhookID}/{WebhookToken}"
   slack_id: "{tokenA}/{tokenB}/{tokenC}"
   pushover_id: "{user_key}@{token}"
