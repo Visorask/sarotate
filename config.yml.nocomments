@@ -11,7 +11,7 @@ global:
   sleeptime: 15m
   same_sa: off
 log:
-  logr_name: "sarotatetest"
+  logr_name: "sarotate"
   logr_dir: "/opt/sarotate/logs"
   logr_size: 1
   logr_detail: verbose
