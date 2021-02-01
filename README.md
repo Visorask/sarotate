@@ -90,11 +90,11 @@ rclone:
 # Global variables
 global:
   # Minimum json file that you want to use.
-  minjs: 3900
+  minjs: 1
   # Maximum json file that you want to use.
-  maxjs: 14000
+  maxjs: 50
   # Use 1 or 101.  101 will split API usage to separate projects, but needs many service accounts.
-  nextjs: 101
+  nextjs: 1
   # Location of the directory with your service account files.
   json_dir: "/your/path/here"
   # Time the script will sleep for until running again.
@@ -105,7 +105,7 @@ global:
 # Log variables
 log:
   # Name that you want your log file to have.
-  logr_name: "sarotatetest"
+  logr_name: "sarotate"
   # Directory that you want your log files stored in.
   logr_dir: "/opt/sarotate/logs"
   # At what size do you want your log to rotate. 1 is default. (MB)
@@ -119,7 +119,7 @@ log:
 apprise:
   # Apprise notifications.
   # |discord|slack|off(default)|
-  notif: discord
+  notif: off
   # Insert discord webhook information.
   # https://github.com/caronc/apprise/wiki/Notify_discord
   disc_id: "{WebhookID}/{WebhookToken}"
