@@ -4,7 +4,7 @@ For rotating Google service accounts to bypass bans or any other myriad of reaso
 
 ## Changelog 3.2
 
-- [Added] Added flag `(-f)` to use the minimum service account set if you want to start the rclone.conf from scratch.
+- [Added] Added flag `(-f)` to use the minimum service account set if you want to the rclone.conf to start from the minsa value.
 - [Changed/Fixed] Adjusted the logic to be correct and not the same service account outside of the setting.
 
 ## Changelog 3.1
