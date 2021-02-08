@@ -2,7 +2,7 @@
 
 For rotating Google service accounts to bypass bans or any other myriad of reasons.
 
-## Changelog 3.1
+## Changelog 3.2
 
 - [Added] Added flag `(-f)` to use the minimum service account set if you want to start the rclone.conf from scratch.
 - [Changed/Fixed] Adjusted the logic to be correct and not the same service account outside of the setting.
