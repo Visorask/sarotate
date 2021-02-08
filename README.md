@@ -4,6 +4,11 @@ For rotating Google service accounts to bypass bans or any other myriad of reaso
 
 ## Changelog 3.1
 
+- [Added] Added flag `(-f)` to use the minimum service account set if you want to start the rclone.conf from scratch.
+- [Changed/Fixed] Adjusted the logic to be correct and not the same service account outside of the setting.
+
+## Changelog 3.1
+
 - [Added] Pushover support for apprise. If your apprise notification is not a part of the script yet let me know.
 - [Changed] Added return code so the apprise doesn't go through every option, and only the 1 if off is returned.
 - [Changed] Changed text a little bit for log rotation.

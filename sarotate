@@ -21,6 +21,8 @@ usage() {
     echo ""
     echo "    ./sarotate -h                           Display this help message."
     echo "    ./sarotate -c <custom_config.yml>       Enter your custom named config file."
+    echo "    ./sarotate -f                           This sets the service account as the minimum service account value regardless of anything set in the rclone config."
+    echo "                                            Note: Useful when changing service accounts paths or modifying an old server."
     echo ""
 }
 
@@ -35,11 +37,12 @@ config_yml() {
 }
 
 # Define options to input from command line.
-while getopts c:h opt; do
+while getopts c:hf opt; do
     case "${opt}" in
         c) config_yml;;
         h) usage
         exit 0;;
+        f) first_run="$(yq global.minsa)";;
         \?) echo "Invalid option: -$OPTARG. Use ./sarotate -h for how to use this script." 1>&2
         exit 1;;
         :) echo "Invalid option: $OPTARG requires an argument" 1>&2;;
@@ -55,6 +58,9 @@ log_detail="$(yq log.logr_detail)"
 
 # Starts the logger (logr) needed. If this is not done no logging will be completed.
 logr start "$log_detail"
+
+# MOD variable
+MOD="$(( $(yq global.maxsa) - $(yq global.minsa) + 1 ))"
 
 # Check to see if a config file is supplied.
 config_check() {
@@ -115,14 +121,31 @@ array_combine() {
             logr error "Correct this and run the script again."
             logr error "The script will now exit."
             exit 1
-            elif [[ "$(yq global.same_sa)" == "on" ]]; then
-            tmp_array+=("${i}")
-            tmp_array+=("${i}")
+            elif [[ -n "$first_run" && "$(yq global.same_sa)" == "on" ]]; then
+            tmp_array+=("$(yq global.minsa)")
+            continue
+            elif [[ -n "$first_run" && "$(yq global.same_sa)" == "off" ]]; then
+            SA_EX=0
+            COUNT_EX="$(yq global.minsa)"
+            until [[ "$SA_EX" -gt "${#arrayShow[*]}" ]]; do
+                COUNT_EX="$(( ((COUNT_EX - $(yq global.minsa) + $(yq global.nextsa)) % MOD) + $(yq global.minsa) ))"
+                tmp_array+=("$COUNT_EX")
+                SA_EX=$(( SA_EX + 1));
+            done
             break
+            elif [[ "$(yq global.same_sa)" == "on" ]]; then
+            tmp_array+=("${arrayShow[0]}")
+            continue
             elif [[ "$i" -ne "$(yq global.minsa)" ]]; then
             tmp_array+=("${i}")
         else
-            tmp_array+=("$(yq global.minsa)")
+            SA_EX=0
+            COUNT_EX="$(yq global.minsa)"
+            until [[ "$SA_EX" -gt "${#arrayShow[*]}" ]]; do
+                COUNT_EX="$(( ((COUNT_EX - $(yq global.minsa) + $(yq global.nextsa)) % MOD) + $(yq global.minsa) ))"
+                tmp_array+=("$COUNT_EX")
+                SA_EX=$(( SA_EX + 1));
+            done
         fi
     done
     readarray -t count < <(printf '%d\n' "${tmp_array[@]}")
@@ -165,14 +188,13 @@ log_rotate () {
 main_rotate () {
     echo "**********************************************"
     echo "**                                          **"
-    echo "**          SARotate Version 3.1            **"
+    echo "**          SARotate Version 3.2            **"
     echo "**                                          **"
     echo "**       Written by Lex and Visorak         **"
     echo "**   https://github.com/Visorask/sarotate   **"
     echo "**                                          **"
     echo "**********************************************"
     logr info "SA Rotate is now initializing."
-    MOD="$(( $(yq global.maxsa) - $(yq global.minsa) + 1 ))"
     while : ; do
         log_rotate "$log_size" "$__logr_LOG_DIR"/"$__logr_DEFAULT_LOG".log
         SA=0
