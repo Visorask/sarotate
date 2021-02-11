@@ -71,6 +71,7 @@ config_check() {
     fi
 }
 
+# Apprise notifications function.
 apprise_notify() {
     if [[ "$(yq apprise.notif)" == "off" ]]; then
         return 0
@@ -83,6 +84,7 @@ apprise_notify() {
     fi
 }
 
+# Detect if yyq is installed and if it needs to be updated.
 yyq_detect() {
     if [[ ! -x "/usr/local/bin/yyq" ]]; then
         logr info "Installing yyq as it is needed for this script."
@@ -109,6 +111,16 @@ yyq_detect() {
     fi
 }
 
+# Function to grab minsa count in array.
+count_minsa() {
+    until [[ "$SA_EX" -gt "${#arrayShow[*]}" ]]; do
+        COUNT_EX="$(( ((COUNT_EX - $(yq global.minsa) + $(yq global.nextsa)) % MOD) + $(yq global.minsa) ))"
+        tmp_array+=("$COUNT_EX")
+        SA_EX=$(( SA_EX + 1));
+    done
+}
+
+
 # This function defines all the variables and arrays needed for the main_rotate function.
 array_combine() {
     readarray -t arrayRemote < <(yq main.remote | sed -E 's/- +\ ?//g')
@@ -121,31 +133,12 @@ array_combine() {
             logr error "Correct this and run the script again."
             logr error "The script will now exit."
             exit 1
-            elif [[ -n "$first_run" && "$(yq global.same_sa)" == "on" ]]; then
-            tmp_array+=("$(yq global.minsa)")
-            continue
-            elif [[ -n "$first_run" && "$(yq global.same_sa)" == "off" ]]; then
-            SA_EX=0
-            COUNT_EX="$(yq global.minsa)"
-            until [[ "$SA_EX" -gt "${#arrayShow[*]}" ]]; do
-                COUNT_EX="$(( ((COUNT_EX - $(yq global.minsa) + $(yq global.nextsa)) % MOD) + $(yq global.minsa) ))"
-                tmp_array+=("$COUNT_EX")
-                SA_EX=$(( SA_EX + 1));
-            done
-            break
-            elif [[ "$(yq global.same_sa)" == "on" ]]; then
-            tmp_array+=("${arrayShow[0]}")
-            continue
-            elif [[ "$i" -ne "$(yq global.minsa)" ]]; then
-            tmp_array+=("${i}")
+            elif [[ -n "$first_run" && "$(yq global.same_sa)" == "on" ]]; then tmp_array+=("$(yq global.minsa)"); continue
+            elif [[ -n "$first_run" && "$(yq global.same_sa)" == "off" ]]; then count_minsa; break
+            elif [[ "$(yq global.same_sa)" == "on" ]]; then tmp_array+=("${arrayShow[0]}"); continue
+            elif [[ "$i" -ne "$(yq global.minsa)" ]]; then tmp_array+=("${i}")
         else
-            SA_EX=0
-            COUNT_EX="$(yq global.minsa)"
-            until [[ "$SA_EX" -gt "${#arrayShow[*]}" ]]; do
-                COUNT_EX="$(( ((COUNT_EX - $(yq global.minsa) + $(yq global.nextsa)) % MOD) + $(yq global.minsa) ))"
-                tmp_array+=("$COUNT_EX")
-                SA_EX=$(( SA_EX + 1));
-            done
+            count_minsa
         fi
     done
     readarray -t count < <(printf '%d\n' "${tmp_array[@]}")
@@ -188,7 +181,7 @@ log_rotate () {
 main_rotate () {
     echo "**********************************************"
     echo "**                                          **"
-    echo "**          SARotate Version 3.2            **"
+    echo "**          SARotate Version 3.3            **"
     echo "**                                          **"
     echo "**       Written by Lex and Visorak         **"
     echo "**   https://github.com/Visorask/sarotate   **"
