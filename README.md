@@ -2,6 +2,11 @@
 
 For rotating Google service accounts to bypass bans or any other myriad of reasons.
 
+## Changelog 3.3
+
+- [Changed] Formatted code to smaller in size.
+- [Changed] Moved loop for minsa into a function for more portability.
+
 ## Changelog 3.2
 
 - [Added] Added flag `(-f)` to use the minimum service account set if you want to the rclone.conf to start from the minsa value.
