@@ -4,6 +4,7 @@ For rotating Google service accounts to bypass bans or any other myriad of reaso
 
 ## Changelog 3.3
 
+- [Added] Renamer script to rename `.json` files from something like [safire](https://github.com/88lex/safire).
 - [Changed] Formatted code to smaller in size.
 - [Changed] Moved loop for minsa into a function for more portability.
 
@@ -59,7 +60,12 @@ This script was created with the help of 88lex. This was written mainly for Clou
 
 3. `sudo chown -R <user>:<group> sarotate` - Run `id` to find your user / group.
 
-4. `cd /opt/sarotate && chmod +x sarotate`
+4. `cd /opt/sarotate && chmod +x sarotate renamer`
+
+   - `renamer` is a script for renaming your files from `000001.json` to `1.json`. This is required as that is how my script runs them.
+   - To run the script do: `./renamer -f /your/sa/path`
+   - This will rename all of your `.json` files into a readable format for my script.
+   - **WARNING:** `renamer` will NOT work with files named with alphabet characters. Example: `i-don't-like-numbers-01.json`
 
 5. `cp config.yml.sample config.yml` if you want comments in your config or `cp config.yml.nocomments config.yml` if you do not want comments.
 
@@ -167,14 +173,14 @@ main:
 
 ---
 
-## If you would like to use crontab then follow the below steps:
+## If you would like to use crontab then follow the below steps
 
   1. `crontab -e`
   2. Add `@reboot sleep 1m && /opt/sarotate/sarotate`
 
  ---
 
-## If you would like to use systemd then follow the below steps:
+## If you would like to use systemd then follow the below steps
 
   1. `cd /opt/sarotate/system`
   2. `nano sarotate.service`  

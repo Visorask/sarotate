@@ -1,0 +1,22 @@
+#!/bin/bash
+
+while getopts :f: opt; do
+    case "${opt}" in
+        f) sa_dir="$OPTARG";;
+        \?) echo "Unknown option: -$OPTARG" >&2; exit 1;;
+        :) echo "Missing option argument for -$OPTARG" >&2; exit 1;;
+        *) echo "Unimplemented option: -$OPTARG" >&2; exit 1;;
+    esac
+done
+shift $(( OPTIND -1 ))
+
+if [[ -z "$sa_dir" ]]; then
+    echo "Missing required argument: -f" >&2
+    exit 1
+fi
+
+readarray -t array_1 < <(find "$sa_dir" -iname "*.json" -type f -printf "%f\n" | sort -n | rev | cut -d/ -f1 | rev | cut -d. -f1)
+
+ls -v "$sa_dir"
+for i in "${array_1[@]}"; do mv "$sa_dir"/"$i".json "$sa_dir"/$(( "10#$i" )).json; done
+ls -v "$sa_dir"
