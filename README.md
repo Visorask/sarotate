@@ -2,6 +2,14 @@
 
 For rotating Google service accounts to bypass bans or any other myriad of reasons.
 
+## Big Changes
+
+So I just do not have time to update this anymore or provide help but the good news is there is a new and improved version which covers a lot of gaps that mine had and you should switch over to it, as it will be less buggy. This was my first real project into programming and while it was fun I do not feel it is worth spending more time on. This program will now be archived, but can still be utilized if you choose but any remaining bugs will do just that, remain. 
+
+To find this new version go here: 
+
+[SARotate](https://github.com/saltydk/SARotate) written by [saltydk](https://github.com/saltydk) and [toutas](https://github.com/toutas)
+
 ## Changelog 3.3
 
 - [Added] Renamer script to rename `.json` files from something like [safire](https://github.com/88lex/safire).
